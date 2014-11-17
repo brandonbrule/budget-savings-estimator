@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="UTF-8">
+  <title>Budget and Savings Estimator</title>
+  <meta name="robots" content="noindex">
+  <link rel="stylesheet" href="css/style.css" media="screen" type="text/css" />
+</head>
+
+<body>
+
+  <!-- Interest and Inflation 
+Ask for advisor
+Look for goals - Want to buy a house in 5 years
+Medium Risk would be best.
+After achieving goal - then get a little more risky.
+Go after 2 - 2.5% Interest.
+GIC 3 - 5 years (locked in interest)
+-->
+<form>
+    <fieldset>
+    <label for="paycheck">Paycheck</label>
+    <input name="paycheck" value="100" id="paycheck" placeholder="How much do you get on your paycheck - ex. 2200" type="text" >
+    </fieldset>
+
+    <fieldset>
+    <label for="frequency-of-pay">How often do you get paid?</label>
+    <div class="pays-per-year radio-options">
+      <div>
+        <input name="frequency-of-pay" type="radio" value="once-month" checked>
+        <label>Once a Month</label>
+      </div>
+      <div>
+        <input name="frequency-of-pay" type="radio" value="twice-month">
+        <label>Twice a Month</label>
+      </div>
+      <div>
+        <input name="frequency-of-pay" type="radio" value="two-weeks">
+        <label>Every Two Weeks</label>
+      </div>
+    </div>
+    </fieldset>
+
+    <fieldset>
+    <label for="monthly-payments">Total Montly Payments - guestimates are fine.</label>    
+    <input name="monthly-payments" value="50" id="monthly-payments" placeholder="How much are your montly bills? - ex. 350" type="text" >
+    </fieldset>
+
+    <fieldset>
+    <label for="savings">How much would you like to save?</label>    
+    <input name="savings" id="savings" value="50" placeholder="How much would you like to save? ex. 25" type="text" >
+    </fieldset>
+
+    <fieldset>
+    <label for="interest">Interest?</label>    
+    <input name="interest" id="interest" value="1" placeholder="ex. 3" type="text" >
+    </fieldset>
+
+    <input type="button" name="submit" value="Calculate" id="submit" >
+  </form>
+
+<div id="results"></div>
+
+  <script src="js/index.js"></script>
+
+</body>
+
+</html>

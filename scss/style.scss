@@ -1,0 +1,77 @@
+body{
+  width:970px;
+  margin:0 auto;
+  font-family:georgia;
+  font-size:0.875em;
+  color:#3d3d3d;
+}
+h3{ 
+  font-size:1.25em;
+  font-weight:800;
+  background:rgba(0,0,0,0.03);
+  color:#fff;
+  text-align:center; 
+  font-family:arial;
+  margin:0;
+  padding:1em 0;
+}
+form{
+  background: rgba(0, 0, 0, 0.05);
+  padding:1em;
+  width:100%;
+  margin-bottom:1em;
+  float:left;
+}
+fieldset{
+  float:left;
+  border:none;
+  &:first-child{ width:100px; }
+  &:nth-child(2){ width:180px; }
+  &:nth-child(5){ width:50px; }
+}
+input{
+  display:block;
+  width:100%;
+  padding:0.5em;
+  margin-top:10px;
+  box-sizing:border-box;
+}
+
+p{ 
+  font-size:1.1em; 
+  padding:1em 0.5em; 
+  margin:0; 
+  border-top:1px solid rgba(0,0,0,0.05); 
+}
+p:nth-child(odd){ background:rgba(255,255,255,0.45); }
+p:nth-child(even){ background:rgba(255,255,255,0.55); }
+strong{float:right;}
+
+.pays-per-year{
+  margin-left:0;
+  margin-top:10px;
+}
+input[type="radio"]{
+  display:inline;
+  width:15px;
+  margin-right:5px;
+  &:last-child{ margin-left:0; }
+}
+input[type="radio"]:first-child{
+  margin-left:0;
+}
+
+$colors: #21a08f, #e54d42, #f1aa2a, #2d7eb6;
+$n : 4;
+#results{
+  width:100%;
+  div{ 
+    width:23%; float:left; margin:1%; padding:0 0 0.25em 0; background:#999; 
+    @for $i from 1 through $n {
+      &:nth-child(#{$i}) {
+        background: nth($colors, $i%7+0);
+      }
+    }
+  }
+}
+form div{ width: auto; float:none; }
