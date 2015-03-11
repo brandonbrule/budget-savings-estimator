@@ -9,6 +9,7 @@
 </head>
 
 <body>
+  <header><h1>Simple Budget Estimator</h1></header>
 
   <!-- Interest and Inflation 
 Ask for advisor
@@ -18,9 +19,17 @@ After achieving goal - then get a little more risky.
 Go after 2 - 2.5% Interest.
 GIC 3 - 5 years (locked in interest)
 -->
+<!-- Interest and Inflation 
+Ask for advisor
+Look for goals - Want to buy a house in 5 years
+Medium Risk would be best.
+After achieving goal - then get a little more risky.
+Go after 2 - 2.5% Interest.
+GIC 3 - 5 years (locked in interest)
+-->
 <form>
     <fieldset>
-    <label for="paycheck">Paycheck</label>
+    <label for="paycheck">How much do you get paid on your paycheck?</label>
     <input name="paycheck" value="100" id="paycheck" placeholder="How much do you get on your paycheck - ex. 2200" type="text" >
     </fieldset>
 
@@ -46,22 +55,34 @@ GIC 3 - 5 years (locked in interest)
     <label for="monthly-payments">Total Montly Payments - guestimates are fine.</label>    
     <input name="monthly-payments" value="50" id="monthly-payments" placeholder="How much are your montly bills? - ex. 350" type="text" >
     </fieldset>
-
+    
     <fieldset>
-    <label for="savings">How much would you like to save?</label>    
-    <input name="savings" id="savings" value="50" placeholder="How much would you like to save? ex. 25" type="text" >
+    <label for="savings">What percent of what's left over would you like to save?</label>    
+    <input name="savings" id="savings" value="65" placeholder="How much would you like to save? ex. 25" type="text" >
     </fieldset>
 
     <fieldset>
-    <label for="interest">Interest?</label>    
-    <input name="interest" id="interest" value="1" placeholder="ex. 3" type="text" >
+      <label for="length-of-savings">How many years do you think you can keep saving like this?</label>    
+      <input name="length-of-savings" id="length-of-savings" value="5" placeholder="ex. 10" type="text" >
     </fieldset>
 
+    <fieldset>
+      <label for="initial-savings">How much is already saved?</label>    
+      <input name="initial-savings" id="initial-savings" placeholder="ex. 500" type="text" >
+    </fieldset>
+    
+    <fieldset>
+    <label for="interest">Average compound rate per year?</label>    
+    <input name="interest" id="interest" placeholder="Leave blank if you're not investing." type="text" >
+    </fieldset>
+  
+    
+    
     <input type="button" name="submit" value="Calculate" id="submit" >
   </form>
 
 <div id="results"></div>
-
+<script src='http://brandonbrule.github.io/itsa/js/itsa.js'></script>
   <script src="js/index.js"></script>
 
 </body>

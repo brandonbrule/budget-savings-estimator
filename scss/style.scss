@@ -1,33 +1,108 @@
+// -- Clearfix -- //
+// @extend .clearfix
+.clearfix {
+  &:after {
+    content: "";
+    display: table;
+    clear: both;
+  }
+}
+
+
+
+// -- Equal Spaced Columns -- //
+// Number of Columns - First Column
+// Remaining Number of Columns * Margin Spacing
+// Container Width - Total Margin Spacing
+// Remaining Width / Total Number of Columns
+
+@mixin equalSpaced( $num_of_cols, $spacing, $container_width  ){
+  
+  width: ( $container_width - ( $spacing * ($num_of_cols - 1) ) ) / $num_of_cols;
+  margin-left: $spacing;
+  margin-top: $spacing;
+  float: left;
+  
+  // Remove Spacing from First Child
+  &:first-child{
+    margin-left: 0;
+  }
+  
+  
+  // We can remove These two things to simply things
+  // ===============================================
+  // When there's more than one row of columns
+  
+  // Remove margin-left of the first element in the row.
+  &:nth-child( #{$num_of_cols}n + 1){
+    margin-left: 0;
+  }
+  
+  // Top Row Remove Margin Top
+  @for $i from 1 through $num_of_cols {
+      &:nth-child(#{$i}) {
+          margin-top: 0;
+      }
+  }
+
+  
+}
+
+
+/* apply a natural box layout model to all elements, but allowing components to change */
+html {
+  box-sizing: border-box;
+  background:#222;
+}
+*, *:before, *:after {
+  box-sizing: inherit;
+}
+
+
+
 body{
-  width:970px;
   margin:0 auto;
-  font-family:georgia;
+  font-family:Equity-Text-B, arial, helvetica, serif;
   font-size:0.875em;
   color:#3d3d3d;
 }
+
+header{
+  background:#444;
+  padding: 1em;
+  border-bottom:2px solid #cecece;
+}
+h1{
+  margin: 0;
+  color:#fff;
+  font-size: 1em;
+}
+
 h3{ 
-  font-size:1.25em;
-  font-weight:800;
+  font-size:1.15em;
+  font-weight:600;
   background:rgba(0,0,0,0.03);
   color:#fff;
-  text-align:center; 
-  font-family:arial;
   margin:0;
-  padding:1em 0;
+  padding:1em;
 }
 form{
-  background: rgba(0, 0, 0, 0.05);
-  padding:1em;
-  width:100%;
+  color:#fff;
+  padding:1%;
+  width:25%;
   margin-bottom:1em;
   float:left;
 }
 fieldset{
-  float:left;
   border:none;
-  &:first-child{ width:100px; }
-  &:nth-child(2){ width:180px; }
-  &:nth-child(5){ width:50px; }
+  margin:1.25em 0 0 0;
+  padding:1.25em 0 0 0;
+  border-top:1px solid #eee;
+  &:first-child{
+    margin-top: 0;
+    border-top: none;
+    padding-top:0;
+  }
 }
 input{
   display:block;
@@ -36,15 +111,24 @@ input{
   margin-top:10px;
   box-sizing:border-box;
 }
-
-p{ 
-  font-size:1.1em; 
-  padding:1em 0.5em; 
-  margin:0; 
-  border-top:1px solid rgba(0,0,0,0.05); 
+input[type="button"]{
+  padding-top:1em;
+  margin-top:1em;
+  border-top:1px solid #eee;
 }
-p:nth-child(odd){ background:rgba(255,255,255,0.45); }
-p:nth-child(even){ background:rgba(255,255,255,0.55); }
+
+ol{
+  padding: 0;
+  margin: 0;
+  list-style: none;
+}
+li{
+  font-size:1.1em; 
+  padding:1em; 
+  margin:0; 
+}
+li:nth-child(odd){ background:rgba(255,255,255,0.45); }
+li:nth-child(even){ background:rgba(255,255,255,0.55); }
 strong{float:right;}
 
 .pays-per-year{
@@ -57,6 +141,7 @@ input[type="radio"]{
   margin-right:5px;
   &:last-child{ margin-left:0; }
 }
+
 input[type="radio"]:first-child{
   margin-left:0;
 }
@@ -64,12 +149,22 @@ input[type="radio"]:first-child{
 $colors: #21a08f, #e54d42, #f1aa2a, #2d7eb6;
 $n : 4;
 #results{
-  width:100%;
+  @extend .clearfix;
+  width:75%;
+  padding:0.5% 0.5% 0.5% 0;
+  float:right;
   div{ 
-    width:23%; float:left; margin:1%; padding:0 0 0.25em 0; background:#999; 
+    @media screen and (max-width: 840px){
+      @include equalSpaced(2, 2%, 100%);
+    }
+    @media screen and (min-width: 840px){
+      @include equalSpaced(4, 1%, 100%);
+    }
+    background:#999; 
     @for $i from 1 through $n {
       &:nth-child(#{$i}) {
         background: nth($colors, $i%7+0);
+        border-bottom: 5px solid nth($colors, $i%7+0);
       }
     }
   }
