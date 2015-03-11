@@ -30,12 +30,12 @@ function annualBreakdown(type,value){
   return annualBreakdown;
 }
 
-function yearlyBreakdown(label, value, length_of_savings){
+function yearlyBreakdown(label, value, length_of_savings, initialSavings){
   var yearsObj = {};
   var value = value;
   for(var i = 1, years = length_of_savings; i <= years; i++){
     var obj = {};
-    yearsObj[label + '-' + i] = value * i;  
+    yearsObj[label + '-' + i] = (value * i) + initialSavings;  
   }
   return yearsObj;
 }
@@ -114,9 +114,10 @@ var Investing = (function () {
   
   var totalCompounded = function(arr1, arr2){
     var arr = [];
-    for (var i = 0, len = arr1.length - 1; i < len; i++){
+    for (var i = 0, len = arr1.length; i < len; i++){
       arr.push( Math.round((arr1[i] + arr2[i])*100.0)/100.0 );
     }
+    arr.shift();
     return arr;
     
   };
@@ -222,8 +223,10 @@ var SimpleBudget = {
     var leftover = annualBreakdown('Leftovers', leftovers)
     return leftover;
   },
-  overTime: function(heading, value, length_of_savings){
-    var years = yearlyBreakdown(heading, value, length_of_savings);
+  overTime: function(heading, value, length_of_savings, initialSavings){
+    initialSavings = typeof initialSavings !== 'undefined' ? initialSavings : 0;
+    initialSavings = parseInt(initialSavings);
+    var years = yearlyBreakdown(heading, value, length_of_savings, initialSavings);
     return years;
   },
   calculate: function(){
@@ -283,7 +286,7 @@ var SimpleBudget = {
     displayBreakdown('Payments', paymentsOverTime);
 
     // Savings over time
-    savingsOverTime = this.overTime('Year', annualSavings, length_of_savings);
+    savingsOverTime = this.overTime('Year', annualSavings, length_of_savings, initialSavings);
     displayBreakdown('Savings', savingsOverTime);
 
     // Leftover over time
@@ -305,7 +308,9 @@ var SimpleBudget = {
     // Don't do anything if there's no interest to compound
     if (interest > 0){
       var savingsWithInterest = Investing.compounded_savings(custom_config);
+
       displayBreakdown('With Interest', savingsWithInterest['Total-Compounded']);
+      displayBreakdown('Without Interest', savingsOverTime);
     }
     
   }
