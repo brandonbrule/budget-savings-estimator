@@ -2,43 +2,41 @@
 //---------------------------//
 
 // Get Element By Id Function - Thanks Brett Tackaberry.
-function elById(arg){ return document.getElementById(arg); }
+function elById(arg){ return document.getElementById(arg); };
 
 // Return Value and Display to HTML Elements Round to nearest 0.00x
-function round(arg){ return Math.round(arg * 100) / 100; }
+function round(arg){ return Math.round(arg * 100) / 100; };
 
 // Useful Math Functions
 // -------------------------- //
-function monthToYear(value) { return round(value * 12) ; }
-function monthly(value){ return round(value / 12); }
-function weekly(value){ return round(value / 52); }
-function daily(value){ return round(value / 365); }
+function monthToYear(value) { return round(value * 12); };
+function monthly(value){ return round(value / 12); };
+function weekly(value){ return round(value / 52); };
+function daily(value){ return round(value / 365); };
+function hourly(value){ return round(value / 24); };
+function minutely(value){ return round(value / 60); };
 
 
 function annualBreakdown(type,value){
-  var years = 'Yearly';
-  var months = 'Monthly';
-  var weeks = 'Weekly';
-  var days = 'Daily';
-
   var annualBreakdown = {};
-  annualBreakdown[years] = value;
-  annualBreakdown[months] = monthly(value);
-  annualBreakdown[weeks] = weekly(value);
-  annualBreakdown[days] = daily(value);
+  annualBreakdown.Yearly = value;
+  annualBreakdown.Monthly = monthly(value);
+  annualBreakdown.Weekly = weekly(value);
+  annualBreakdown.Daily = daily(value);
+  annualBreakdown.Hourly = hourly( daily(value) );
+  annualBreakdown.Minutely = minutely( hourly( daily(value) ) );
   
   return annualBreakdown;
-}
+};
 
 function yearlyBreakdown(label, value, length_of_savings, initialSavings){
-  var yearsObj = {};
+  var yearsObj = [];
   var value = value;
   for(var i = 1, years = length_of_savings; i <= years; i++){
-    var obj = {};
-    yearsObj[label + '-' + i] = (value * i) + initialSavings;  
+    yearsObj.push( (value * i) + initialSavings );  
   }
   return yearsObj;
-}
+};
 
 
 function displayBreakdown(heading, object){
@@ -107,8 +105,6 @@ var Investing = (function () {
       arr.push( Math.round( ( result - 1 ) * PMT / (r/n) * 100 ) / 100 );
     }
     data['Contributions-Compounded-Breakdown'] = arr;
-    // First savings is 0, then after the first month your savings per month
-    arr.unshift(0);
     return arr;
   };
   
@@ -117,7 +113,6 @@ var Investing = (function () {
     for (var i = 0, len = arr1.length; i < len; i++){
       arr.push( Math.round((arr1[i] + arr2[i])*100.0)/100.0 );
     }
-    arr.shift();
     return arr;
     
   };
@@ -266,7 +261,7 @@ var SimpleBudget = {
     displayBreakdown('Payments', payments);
     
     // Savings
-    annualSavings = (annualIncome - annualPayments) * savings;
+    annualSavings = round( (annualIncome - annualPayments) * savings );
     savings = this.savings(annualSavings);
     displayBreakdown('Savings', savings);
     
@@ -279,19 +274,19 @@ var SimpleBudget = {
     
     // Over Time
     incomeOverTime = this.overTime('Year', annualIncome, length_of_savings);
-    displayBreakdown('Income', incomeOverTime);
+    //displayBreakdown('Income', incomeOverTime);
     
     // Payments over time
     paymentsOverTime = this.overTime('Year', annualPayments, length_of_savings);
-    displayBreakdown('Payments', paymentsOverTime);
+    //displayBreakdown('Payments', paymentsOverTime);
 
     // Savings over time
     savingsOverTime = this.overTime('Year', annualSavings, length_of_savings, initialSavings);
-    displayBreakdown('Savings', savingsOverTime);
+    //displayBreakdown('Savings', savingsOverTime);
 
     // Leftover over time
     leftoverOverTime = this.overTime('Year', leftover.Yearly, length_of_savings);
-    displayBreakdown('Leftover', leftoverOverTime);
+    //displayBreakdown('Leftover', leftoverOverTime);
 
 
     
@@ -309,9 +304,74 @@ var SimpleBudget = {
     if (interest > 0){
       var savingsWithInterest = Investing.compounded_savings(custom_config);
 
-      displayBreakdown('With Interest', savingsWithInterest['Total-Compounded']);
-      displayBreakdown('Without Interest', savingsOverTime);
+      //displayBreakdown('With Interest', savingsWithInterest['Total-Compounded']);
+      //displayBreakdown('Without Interest', savingsOverTime);
+
+    var array_of_years = [];
+
+    for ( var i=0; i < length_of_savings; i++ ){
+      array_of_years.push('Year ' + i);
     }
+
+    var container = elById('savings-graph');
+    var high_charts = document.createElement('section');
+    high_charts.setAttribute('id', 'container');
+    container.appendChild(high_charts);
+
+
+
+
+
+
+    var chart = new Highcharts.Chart({
+      chart: {
+        renderTo: 'container'
+      },
+
+      title: {
+        text: 'Hypothetical Investments',
+        style:{
+          color: '#fff'
+        }
+      },
+
+      xAxis: {
+        categories: array_of_years,
+        style:{
+          color: '#fff'
+        }
+      },
+
+      yAxis: {
+        title: {
+          text: 'Savings',
+          style:{
+            color: '#fff'
+          }
+        }
+      },
+
+      series: [
+        {
+          name: 'Savings With Interest',
+          style:{
+            color: '#fff'
+          },
+          data: savingsWithInterest['Total-Compounded']
+        },
+        {
+          name: 'Savings Without Interest',
+          style:{
+            color: '#fff'
+          },
+          data: savingsOverTime
+        }
+      ]
+
+    });
+
+  }
+
     
   }
 };
@@ -331,5 +391,6 @@ var SimpleBudget = {
 elById("submit").onclick = function () {
   var container = elById('results');
   container.innerHTML = '';
+  elById('savings-graph').innerHTML = '';
   SimpleBudget.calculate();
 };

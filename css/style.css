@@ -152,4 +152,12 @@ form div {
   width: auto;
   float: none; }
 
+#savings-graph {
+  width: 75%;
+  padding: 0.5% 0.5% 0.5% 0;
+  float: right; }
+
+#container {
+  height: 400px; }
+
 /*# sourceMappingURL=style.css.map */
