@@ -272,21 +272,21 @@ var SimpleBudget = {
     displayBreakdown('Leftover', leftover);
     
     
-    // Over Time
-    incomeOverTime = this.overTime('Year', annualIncome, length_of_savings);
-    //displayBreakdown('Income', incomeOverTime);
+    // // Over Time
+    // incomeOverTime = this.overTime('Year', annualIncome, length_of_savings);
+    // //displayBreakdown('Income', incomeOverTime);
     
-    // Payments over time
-    paymentsOverTime = this.overTime('Year', annualPayments, length_of_savings);
-    //displayBreakdown('Payments', paymentsOverTime);
+    // // Payments over time
+    // paymentsOverTime = this.overTime('Year', annualPayments, length_of_savings);
+    // //displayBreakdown('Payments', paymentsOverTime);
 
-    // Savings over time
+    // // Savings over time
     savingsOverTime = this.overTime('Year', annualSavings, length_of_savings, initialSavings);
-    //displayBreakdown('Savings', savingsOverTime);
+    // //displayBreakdown('Savings', savingsOverTime);
 
-    // Leftover over time
-    leftoverOverTime = this.overTime('Year', leftover.Yearly, length_of_savings);
-    //displayBreakdown('Leftover', leftoverOverTime);
+    // // Leftover over time
+    // leftoverOverTime = this.overTime('Year', leftover.Yearly, length_of_savings);
+    // //displayBreakdown('Leftover', leftoverOverTime);
 
 
     
@@ -303,6 +303,10 @@ var SimpleBudget = {
     // Don't do anything if there's no interest to compound
     if (interest > 0){
       var savingsWithInterest = Investing.compounded_savings(custom_config);
+
+    } else {
+      savingsWithInterest = ['0']
+    }
 
       //displayBreakdown('With Interest', savingsWithInterest['Total-Compounded']);
       //displayBreakdown('Without Interest', savingsOverTime);
@@ -369,8 +373,6 @@ var SimpleBudget = {
       ]
 
     });
-
-  }
 
     
   }
