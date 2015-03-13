@@ -63,7 +63,7 @@ GIC 3 - 5 years (locked in interest)
 
     <fieldset>
       <label for="length-of-savings">How many years do you think you can keep saving like this?</label>    
-      <input name="length-of-savings" id="length-of-savings" value="5" placeholder="ex. 10" type="text" >
+      <input name="length-of-savings" id="length-of-savings" placeholder="ex. 10" type="text" value="20" >
     </fieldset>
 
     <fieldset>
@@ -73,7 +73,7 @@ GIC 3 - 5 years (locked in interest)
     
     <fieldset>
     <label for="interest">Average compound rate per year?</label>    
-    <input name="interest" id="interest" placeholder="Leave blank if you're not investing." type="text" >
+    <input name="interest" id="interest" placeholder="Leave blank if you're not investing." value="5" type="text" >
     </fieldset>
   
     
@@ -83,7 +83,9 @@ GIC 3 - 5 years (locked in interest)
 
 <div id="results"></div>
 <div id="savings-graph"></div>
-
+<div id="questions-container">
+  <section class="question">% Scraped? <button data-action="fees">Fees?</button></section>
+</div>
 
 <script src='http://brandonbrule.github.io/itsa/js/itsa.js'></script>
 
