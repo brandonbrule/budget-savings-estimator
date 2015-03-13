@@ -290,6 +290,12 @@ var SimpleBudget = {
     // Income Information From Forms
     this.getIncomeInformation();
 
+    // Reset
+    while( chart.series.length > 0 ) {
+        chart.series[0].remove( false );
+    }
+
+
 
 
     // Income
@@ -340,8 +346,15 @@ var SimpleBudget = {
     }
   
     // Update Savings and Savings With Interest Chart Information
-    chart.series[0].setData( savingsWithInterest['Total-Compounded'], true );
-    chart.series[1].setData( savingsOverTime, true );
+    chart.addSeries({
+        name: 'Savings With Interest',
+        data: savingsWithInterest['Total-Compounded']
+    }, false);
+    chart.addSeries({
+        name: 'Savings Over Time',
+        data: savingsOverTime
+    }, false);
+    chart.redraw();
 
   }
 
@@ -354,21 +367,43 @@ var ChartingUpdates = (function () {
 
   var questions_container = document.getElementById('questions-container');
 
-  var feesCompounded = function(){
-    its.a('test');
+  var feesCompounded = function(interest_data_value){
+    // Savings with Interest
+    var custom_config = {
+      principle_value : initialSavings,
+      monthly_contribution: savings.Yearly,
+      annual_interest: interest - interest_data_value,
+      times_compounded_per_year: 1,
+      length_of_investment: length_of_savings
+    };
+
+    // Don't do anything if there's no interest to compound
+    var savingsWithInterest;
+    if (interest > 0){
+      var savingsWithInterestFees = Investing.compounded_savings(custom_config);
+    } else {
+      savingsWithInterestFees = ['0']
+    }
+    chart.addSeries({                        
+        name: (100 * interest_data_value) + '% fees',
+        data: savingsWithInterestFees['Total-Compounded']
+    }, false);
+    chart.redraw();
+
+  
+    // Update Savings and Savings With Interest Chart Information
+    //chart.series[0].setData( savingsWithInterest['Total-Compounded'], true );
+    //chart.series[1].setData( savingsOverTime, true );
 
   };
 
-
-
-
-
   var actionEvents = function(event){
     var action_data_type = event.target.getAttribute('data-action');
+    var action_data_value = event.target.getAttribute('data-action-value');
 
     switch(action_data_type) {
         case 'fees':
-            feesCompounded();
+            feesCompounded(action_data_value);
             break;
         case 'something':
           
@@ -452,22 +487,6 @@ var chart = new Highcharts.Chart({
         }
       },
 
-      series: [
-        {
-          name: 'Savings With Interest',
-          style:{
-            color: '#fff'
-          },
-          data: []
-        },
-        {
-          name: 'Savings Without Interest',
-          style:{
-            color: '#fff'
-          },
-          documentata: []
-        }
-      ]
 
     });
 

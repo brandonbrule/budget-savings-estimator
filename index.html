@@ -30,14 +30,14 @@ GIC 3 - 5 years (locked in interest)
 <form>
     <fieldset>
     <label for="paycheck">How much do you get paid on your paycheck?</label>
-    <input name="paycheck" value="100" id="paycheck" placeholder="How much do you get on your paycheck - ex. 2200" type="text" >
+    <input name="paycheck" value="1200" id="paycheck" placeholder="How much do you get on your paycheck - ex. 2200" type="text" >
     </fieldset>
 
     <fieldset>
     <label for="frequency-of-pay">How often do you get paid?</label>
     <div class="pays-per-year radio-options">
       <div>
-        <input name="frequency-of-pay" type="radio" value="once-month" checked>
+        <input name="frequency-of-pay" type="radio" value="once-month">
         <label>Once a Month</label>
       </div>
       <div>
@@ -45,7 +45,7 @@ GIC 3 - 5 years (locked in interest)
         <label>Twice a Month</label>
       </div>
       <div>
-        <input name="frequency-of-pay" type="radio" value="two-weeks">
+        <input name="frequency-of-pay" type="radio" checked value="two-weeks">
         <label>Every Two Weeks</label>
       </div>
     </div>
@@ -53,7 +53,7 @@ GIC 3 - 5 years (locked in interest)
 
     <fieldset>
     <label for="monthly-payments">Total Montly Payments - guestimates are fine.</label>    
-    <input name="monthly-payments" value="50" id="monthly-payments" placeholder="How much are your montly bills? - ex. 350" type="text" >
+    <input name="monthly-payments" value="1600" id="monthly-payments" placeholder="How much are your montly bills? - ex. 350" type="text" >
     </fieldset>
     
     <fieldset>
@@ -84,7 +84,13 @@ GIC 3 - 5 years (locked in interest)
 <div id="results"></div>
 <div id="savings-graph"></div>
 <div id="questions-container">
-  <section class="question">% Scraped? <button data-action="fees">Fees?</button></section>
+  <section class="question">
+    <h2>Understand the impact of fees</h2>
+    <button data-action="fees" data-action-value="0.01">1%</button>
+    <button data-action="fees" data-action-value="0.02">2%</button>
+    <button data-action="fees" data-action-value="0.03">3%</button>
+    <p>They look small, but they add up over time.</p>
+  </section>
 </div>
 
 <script src='http://brandonbrule.github.io/itsa/js/itsa.js'></script>
