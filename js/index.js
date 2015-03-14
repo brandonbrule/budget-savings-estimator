@@ -516,8 +516,13 @@ ChartingUpdates.init();
 
 // On Submit
 // Resets the Investments Graphs Data when new data is submitted
-elById("submit").onclick = function () {
+
+function startParty(){
   var container = elById('results');
   container.innerHTML = '';
   SimpleBudget.calculate();
+};
+
+elById("submit").onclick = function () {
+  startParty();
 };
