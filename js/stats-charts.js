@@ -110,7 +110,7 @@ var weekly_breakdown_stats_chart = new Highcharts.Chart({
         },
         chart: {
         	renderTo: 'weekly-breakdown-stats',
-            type: 'column'
+            type: 'bar'
         },
         xAxis: {
             categories: ['Income', 'Payments', 'Savings', 'Remaining']
@@ -164,10 +164,10 @@ var monthly_breakdown_stats_chart = new Highcharts.Chart({
         },
         chart: {
         	renderTo: 'monthly-breakdown-stats',
-            type: 'bar',
+            type: 'column',
             lineWidth: 0,
-   minorGridLineWidth: 0,
-   lineColor: 'transparent',
+			minorGridLineWidth: 0,
+			lineColor: 'transparent',
         },
         xAxis: {
             categories: ['Income', 'Payments', 'Savings', 'Remaining'],
@@ -227,6 +227,7 @@ var yearly_breakdown_stats_chart = new Highcharts.Chart({
             type: 'area',
             renderTo: 'yearly-breakdown-stats'
         },
+
         title: {
             text: ''
         },
@@ -239,17 +240,10 @@ var yearly_breakdown_stats_chart = new Highcharts.Chart({
         },
         yAxis: {
             title: {
-                text: 'Billions'
-            },
-            labels: {
-                formatter: function () {
-                    return this.value / 1000;
-                }
+                text: ''
             }
         },
-        tooltip: {
-            shared: true,
-        },
+
         plotOptions: {
             area: {
                 stacking: 'normal',
@@ -258,7 +252,11 @@ var yearly_breakdown_stats_chart = new Highcharts.Chart({
                 marker: {
                     lineWidth: 1,
                     lineColor: '#666666'
-                }
+                },
+                dataLabels: {
+                    enabled: true,
+                    format: '<b>{point.y:.1f}'
+                },
             }
         },
         series: [
