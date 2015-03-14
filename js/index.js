@@ -355,20 +355,24 @@ var SimpleBudget = {
     this.updateStatsChart(daily_breakdown_stats_chart, 'Daily');
     // Stats Text
     var stats_daily_remaining = elById('daily-remaining');
+    var stats_daily_payments = elById('daily-payments');
     var stats_daily_income = elById('daily-income');
-    var stats_hourly_income = elById('hourly-income');
+    var stats_daily_savings = elById('daily-savings');
 
     var stats_weekly_remaining = elById('weekly-remaining');
     var stats_weekly_savings = elById('weekly-savings');
     var stats_weekly_payments = elById('weekly-payments');
+    var stats_weekly_income = elById('weekly-income');
 
     stats_daily_remaining.innerHTML = remaining.Daily;
+    stats_daily_payments.innerHTML = payments.Daily;
     stats_daily_income.innerHTML = income.Daily;
-    stats_hourly_income.innerHTML = income.Hourly;
+    stats_daily_savings.innerHTML = savings.Hourly;
 
     stats_weekly_remaining.innerHTML = remaining.Weekly;
     stats_weekly_savings.innerHTML = savings.Weekly;
     stats_weekly_payments.innerHTML = payments.Weekly;
+    stats_weekly_income.innerHTML = income.Weekly;
 
     // Weekly Breakdown
     weekly_breakdown_stats_chart.series[0].setData( [payments.Weekly, savings.Weekly, remaining.Weekly], true );
