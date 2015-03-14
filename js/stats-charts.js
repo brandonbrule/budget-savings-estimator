@@ -81,15 +81,15 @@ var daily_breakdown_stats_chart = new Highcharts.Chart({
             data: [
 
             {
-                    y: 23.4,
+                    y: 0,
                     color: '#e54d42'
                 },
                 {
-                    y: 13.4,
+                    y: 0,
                     color: '#f1aa2a'
                 },
                 {
-                    y: 63.4,
+                    y: 0,
                     color: '#2d7eb6'
                 }
                 
@@ -115,6 +115,10 @@ var weekly_breakdown_stats_chart = new Highcharts.Chart({
         xAxis: {
             categories: ['Payments', 'Savings', 'Remaining']
         },
+        yAxis:{
+        	gridLineWidth: 0,
+            minorGridLineWidth: 0
+        },
         tooltip: {
             pointFormat: '${point.y:.1f}</b>'
         },
@@ -131,17 +135,72 @@ var weekly_breakdown_stats_chart = new Highcharts.Chart({
             data: [
             	{
             		name: 'Payments',
-                    y: 23.4,
+                    y: 0,
                     color: '#e54d42'
                 },
                 {
                 	name: 'Savings',
-                    y: 13.4,
+                    y: 0,
                     color: '#f1aa2a'
                 },
                 {
                 	name: 'Remaining',
-                    y: 63.4,
+                    y: 0,
+                    color: '#2d7eb6'
+                }
+            ]
+        }]
+    });
+
+
+var monthly_breakdown_stats_chart = new Highcharts.Chart({
+        title: {
+            text: ''
+        },
+        chart: {
+        	renderTo: 'monthly-breakdown-stats',
+            type: 'bar',
+            lineWidth: 0,
+   minorGridLineWidth: 0,
+   lineColor: 'transparent',
+        },
+        xAxis: {
+            categories: ['Payments', 'Savings', 'Remaining'],
+        },
+        yAxis:{
+        	labels: {
+                enabled: false
+            },
+            gridLineWidth: 0,
+            minorGridLineWidth: 0
+        },
+        tooltip: {
+            pointFormat: '${point.y:.1f}</b>'
+        },
+        plotOptions: {
+            series: {
+                allowPointSelect: true,
+                showInLegend: false,
+                dataLabels: {
+                    enabled: true
+                }
+            }
+        },
+        series: [{
+            data: [
+            	{
+            		name: 'Payments',
+                    y: 0,
+                    color: '#e54d42'
+                },
+                {
+                	name: 'Savings',
+                    y: 0,
+                    color: '#f1aa2a'
+                },
+                {
+                	name: 'Remaining',
+                    y: 0,
                     color: '#2d7eb6'
                 }
             ]

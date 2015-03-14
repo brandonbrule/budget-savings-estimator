@@ -45,7 +45,7 @@ function displayBreakdown(heading, object){
     if (object.hasOwnProperty(key)) {
 
       var list_item = document.createElement('li');
-      var value = '<strong>' + object[key] + '</strong>';
+      var value = '<strong>' + round(object[key]) + '</strong>';
          
       list_item.innerHTML = key + ' ' + value;
       list_container.appendChild( list_item );
@@ -351,8 +351,7 @@ var SimpleBudget = {
 
 
 
-    // Daily Breakdown Stats
-    this.updateStatsChart(daily_breakdown_stats_chart, 'Daily');
+    
     // Stats Text
     var stats_daily_remaining = elById('daily-remaining');
     var stats_daily_payments = elById('daily-payments');
@@ -364,18 +363,40 @@ var SimpleBudget = {
     var stats_weekly_payments = elById('weekly-payments');
     var stats_weekly_income = elById('weekly-income');
 
+    var stats_monthly_remaining = elById('monthly-remaining');
+    var stats_monthly_savings = elById('monthly-savings');
+    var stats_monthly_payments = elById('stat-monthly-payments');
+    var stats_monthly_income = elById('monthly-income');
+
+    // Daily Breakdown
+    this.updateStatsChart(daily_breakdown_stats_chart, 'Daily');
+
     stats_daily_remaining.innerHTML = remaining.Daily;
     stats_daily_payments.innerHTML = payments.Daily;
     stats_daily_income.innerHTML = income.Daily;
     stats_daily_savings.innerHTML = savings.Daily;
+
+
+    
+
+    // Monthly Breakdown
+    monthly_breakdown_stats_chart.series[0].setData( [payments.Monthly, savings.Monthly, remaining.Monthly], true );
+
+    stats_monthly_remaining.innerHTML = remaining.Monthly;
+    stats_monthly_savings.innerHTML = savings.Monthly;
+    stats_monthly_payments.innerHTML = payments.Monthly;
+    stats_monthly_income.innerHTML = income.Monthly;
+
+    // Monthly Stats
+
+    weekly_breakdown_stats_chart.series[0].setData( [payments.Weekly, savings.Weekly, remaining.Weekly], true );
 
     stats_weekly_remaining.innerHTML = remaining.Weekly;
     stats_weekly_savings.innerHTML = savings.Weekly;
     stats_weekly_payments.innerHTML = payments.Weekly;
     stats_weekly_income.innerHTML = income.Weekly;
 
-    // Weekly Breakdown
-    weekly_breakdown_stats_chart.series[0].setData( [payments.Weekly, savings.Weekly, remaining.Weekly], true );
+
 
   }
 
@@ -454,7 +475,7 @@ ChartingUpdates.init();
 
 
 // Load Default Form Values
-SimpleBudget.calculate();
+//SimpleBudget.calculate();
 
 
 // On Submit
