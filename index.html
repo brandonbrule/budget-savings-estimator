@@ -80,6 +80,7 @@ GIC 3 - 5 years (locked in interest)
     <input type="button" name="submit" value="Calculate" id="submit" >
 
     <input type="button" onclick="RememberForm.init();" value="Save Settings">
+    <input type="button" onclick="localStorage.removeItem('investments_localstorage');" value="Clear Saved Settings">
   </form>
 </div>
 
@@ -171,7 +172,7 @@ var RememberForm = (function () {
   var setLocalStorageItem = function(local_storage_object){
     if (!localStorage.getItem(local_storage_object)) {
       // Put the object into storage
-      localStorage.setItem(local_storage_object, JSON.stringify(form_local_storage_object));
+      localStorage.setItem('investments_localstorage', JSON.stringify(form_local_storage_object));
     }
   };
   
@@ -182,7 +183,7 @@ var RememberForm = (function () {
   // Return Local Storage Item as JS Object
   var parseLocalStorageItemAsObject = function(local_storage_object){
     // Retrieve the object from storage
-    var formLocalStorageObject = localStorage.getItem(local_storage_object);
+    var formLocalStorageObject = localStorage.getItem('investments_localstorage');
     var formLocalStorageObject = JSON.parse(formLocalStorageObject);
     return formLocalStorageObject; 
   };
@@ -194,6 +195,8 @@ var RememberForm = (function () {
     
     var local_storage_object = parseLocalStorageItemAsObject(form_local_storage_object);
     var form_from_local_storage = local_storage_object[form_id][0];
+
+    SimpleBudget.calculate();
 
     
     // Set Input Value from Local Storage Property
@@ -235,11 +238,8 @@ var RememberForm = (function () {
       form_input_object[form_input_id] = form_inputs[i].value;
       
       form_input_array.push(form_input_object);
-      //its.a(form_input_object);
+
     }
-    
-    //its.a(form_input_array);
-    //its.a(form_local_storage_object);
     
     form_local_storage_object[form_id].push(form_input_array);
 
@@ -272,14 +272,11 @@ var RememberForm = (function () {
     }
     
     removeLocalStorageItem(form_local_storage_object);
-    setLocalStorageItem(form_local_storage_object);
+    setLocalStorageItem(form_id);
     
-    
-    
-    //its.a(form_local_storage_object);
     
     var another_form_local_storage_object = parseLocalStorageItemAsObject(form_local_storage_object);
-    //its.a(another_form_local_storage_object);
+
     
   };
   
@@ -292,20 +289,6 @@ var RememberForm = (function () {
 })();
 
 
-var save_localstorage = function (){
-  
-  var form_inputs = document.getElementsByTagName('input');
-  
-  for (var i = 0, len = form_inputs.length; i < len; i++){
-    form_inputs[i].addEventListener("focusout", function(){ 
-    RememberForm.init();
-    });
-  }
-  
-}
-
-save_localstorage();
-
 // Set Form Values from Local Storage Object
 var setFormValues = function(){
   var my_forms = document.getElementsByTagName('form');
@@ -314,7 +297,10 @@ var setFormValues = function(){
     RememberForm.setFormValuesFromLocalStorage(my_form_id);
   }
 }
+
 setFormValues();
+
+
 
 
 </script>
