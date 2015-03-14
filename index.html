@@ -78,9 +78,10 @@ GIC 3 - 5 years (locked in interest)
     </fieldset>
 
     <input type="button" name="submit" value="Calculate" id="submit" >
-
-    <input type="button" onclick="RememberForm.init();" value="Save Settings">
-    <input type="button" onclick="localStorage.removeItem('investments_localstorage');" value="Clear Saved Settings">
+    <div style="margin-top: 1em" class="col-container">
+      <input type="button" class="col-2" onclick="RememberForm.init();" value="Save Settings">
+      <input type="button" class="col-2" onclick="localStorage.removeItem('investments_localstorage');" value="Clear Saved Settings">
+    </div>
   </form>
 </div>
 
