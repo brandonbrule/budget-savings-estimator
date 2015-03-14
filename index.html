@@ -28,7 +28,7 @@ Go after 2 - 2.5% Interest.
 GIC 3 - 5 years (locked in interest)
 -->
 <div class="navigation-container">
-<form>
+<form id="savings-form">
     <fieldset>
     <label for="paycheck">How much do you get paid on your paycheck?</label>
     <input name="paycheck" value="1200" id="paycheck" placeholder="How much do you get on your paycheck - ex. 2200" type="text" >
@@ -78,6 +78,8 @@ GIC 3 - 5 years (locked in interest)
     </fieldset>
 
     <input type="button" name="submit" value="Calculate" id="submit" >
+
+    <input type="button" onclick="RememberForm.init();" value="Save Settings">
   </form>
 </div>
 
@@ -158,6 +160,164 @@ GIC 3 - 5 years (locked in interest)
 <script src="js/global-variables.js"></script>
 <script src="js/stats-charts.js"></script>
 <script src="js/index.js"></script>
+<script>
+var RememberForm = (function () {
+
+  // Forms as JS Object
+  var form_local_storage_object = {};
+  
+  // Set Local Storage Item, can be any name
+  // form_id cause this object remembers forms.
+  var setLocalStorageItem = function(local_storage_object){
+    if (!localStorage.getItem(local_storage_object)) {
+      // Put the object into storage
+      localStorage.setItem(local_storage_object, JSON.stringify(form_local_storage_object));
+    }
+  };
+  
+  var removeLocalStorageItem = function(local_storage_object){
+    localStorage.removeItem(local_storage_object);
+  };
+  
+  // Return Local Storage Item as JS Object
+  var parseLocalStorageItemAsObject = function(local_storage_object){
+    // Retrieve the object from storage
+    var formLocalStorageObject = localStorage.getItem(local_storage_object);
+    var formLocalStorageObject = JSON.parse(formLocalStorageObject);
+    return formLocalStorageObject; 
+  };
+  
+  
+  var setFormValuesFromLocalStorage = function (form_id){
+    var form = document.getElementById(form_id);
+    var form_inputs = form.getElementsByTagName('input');
+    
+    var local_storage_object = parseLocalStorageItemAsObject(form_local_storage_object);
+    var form_from_local_storage = local_storage_object[form_id][0];
+
+    
+    // Set Input Value from Local Storage Property
+    for (var i = 0, len = form_inputs.length; i < len; i++){
+      
+      for(key in form_from_local_storage[i]) {
+        
+        if(form_from_local_storage[i].hasOwnProperty(key)) {
+          var value = form_from_local_storage[i][key];
+          form_inputs[i].value = value;
+        }
+        
+      }
+      
+    }
+  };
+  
+  
+  var setFormLocalStorageObjectWithInputs = function (form_id) {
+    var form = document.getElementById(form_id);
+    var form_inputs = form.getElementsByTagName('input');
+    var form_input_id;
+    var form_input_object;
+    var form_input_array = [];
+    
+
+    // Push each form input into an object
+    // form input id : form input value
+    // Push that back into our local storage object.
+    for (var i = 0; i < form_inputs.length; i++){
+      
+      if ( form_inputs[i].hasAttribute('id')  ){
+        form_input_id = form_inputs[i].getAttribute('id');
+      } else {
+        form_input_id = form_inputs[i].getAttribute('value');
+      }
+      
+      form_input_object = {};
+      form_input_object[form_input_id] = form_inputs[i].value;
+      
+      form_input_array.push(form_input_object);
+      //its.a(form_input_object);
+    }
+    
+    //its.a(form_input_array);
+    //its.a(form_local_storage_object);
+    
+    form_local_storage_object[form_id].push(form_input_array);
+
+  };
+
+  
+  
+  var init = function () {
+    var forms = document.getElementsByTagName('form');
+    var form_id;
+    
+    //removeLocalStorageItem(form_local_storage_object);
+    
+    for (var i = 0; i < forms.length; i++){
+      var form_local_storage_array = [];
+      
+      // Array of forms with form id as the property name
+      form_id = forms[i].getAttribute('id');
+      
+      // Make Objects Properties from Form Ids as arrays that will hold the inputs
+      
+      form_local_storage_object[form_id] = form_local_storage_array;
+      
+      if (localStorage.getItem(form_id) === 'null') {
+        setFormValuesFromLocalStorage(form_id);
+      }
+    
+      
+      setFormLocalStorageObjectWithInputs(form_id);
+    }
+    
+    removeLocalStorageItem(form_local_storage_object);
+    setLocalStorageItem(form_local_storage_object);
+    
+    
+    
+    //its.a(form_local_storage_object);
+    
+    var another_form_local_storage_object = parseLocalStorageItemAsObject(form_local_storage_object);
+    //its.a(another_form_local_storage_object);
+    
+  };
+  
+  return {
+    removeLocalStorageItem : removeLocalStorageItem,
+    setFormValuesFromLocalStorage : setFormValuesFromLocalStorage,
+    init: init
+  };
+
+})();
+
+
+var save_localstorage = function (){
+  
+  var form_inputs = document.getElementsByTagName('input');
+  
+  for (var i = 0, len = form_inputs.length; i < len; i++){
+    form_inputs[i].addEventListener("focusout", function(){ 
+    RememberForm.init();
+    });
+  }
+  
+}
+
+save_localstorage();
+
+// Set Form Values from Local Storage Object
+var setFormValues = function(){
+  var my_forms = document.getElementsByTagName('form');
+  for (var j = 0; j < my_forms.length; j++){  
+    var my_form_id = my_forms[j].getAttribute('id');
+    RememberForm.setFormValuesFromLocalStorage(my_form_id);
+  }
+}
+setFormValues();
+
+
+</script>
 
 
 

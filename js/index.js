@@ -322,7 +322,7 @@ var SimpleBudget = {
 
 
     // Savings
-    annualSavings = annualIncome - annualPayments;
+    annualSavings = ( (elById('savings').value * 0.01) * ( annualIncome - annualPayments) ) ;
     savings = this.savings(annualSavings);
     displayBreakdown('Savings', savings);
 
