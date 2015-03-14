@@ -197,7 +197,7 @@ var RememberForm = (function () {
     var local_storage_object = parseLocalStorageItemAsObject(form_local_storage_object);
     var form_from_local_storage = local_storage_object[form_id][0];
 
-    SimpleBudget.calculate();
+    
 
     
     // Set Input Value from Local Storage Property
@@ -213,6 +213,8 @@ var RememberForm = (function () {
       }
       
     }
+
+    SimpleBudget.calculate();
   };
   
   
