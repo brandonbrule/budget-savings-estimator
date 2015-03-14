@@ -64,7 +64,7 @@ GIC 3 - 5 years (locked in interest)
 
     <fieldset>
       <label for="length-of-savings">How many years do you think you can keep saving like this?</label>    
-      <input name="length-of-savings" id="length-of-savings" placeholder="ex. 10" type="text" value="20" >
+      <input name="length-of-savings" id="length-of-savings" placeholder="ex. 10" type="text" value="10" >
     </fieldset>
 
     <fieldset>
@@ -110,7 +110,7 @@ GIC 3 - 5 years (locked in interest)
         <div id="daily-breakdown-stats"></div>
         <ul>
           <li>Great job! You can treat yourself to <span class="color-remaining" id="daily-remaining">0</span> a day.</li>
-          <li>You are planning on saving <span class="color-savings" id="daily-savings">0</span>, but it doesn't have to be today.</li>
+          <li>You are planning on saving <span class="color-savings" id="daily-savings">0</span>.</li>
           <li>Unfortunately, this whole life thing cost you <span class="color-payments" id="daily-payments">0</span> today.</li>
           <li>But, would you look at that, it turns out you are worth <span class="color-income" id="daily-income">0</span> each day.</li>
         </ul>
@@ -132,8 +132,19 @@ GIC 3 - 5 years (locked in interest)
         <ul>
           <li>You are spending about <span class="color-remaining" id="monthly-remaining">0</span> a month on yourself.</li>
           <li>And making big strides with your savings. Another <span class="color-savings" id="monthly-savings">0</span> added.</li>
-          <li>Did you make sure to pay all your bills? <span class="color-payments" id="stat-monthly-payments">0</span>(ish).</li>
-          <li>Rich person over here is worth about <span class="color-income" id="monthly-income">0</span> every month.</li>
+          <li>Did you make sure to make all your payments? <span class="color-payments" id="stat-monthly-payments">0</span>(ish).</li>
+          <li>You were paid <span class="color-income" id="monthly-income">0</span> this month.</li>
+        </ul>
+      </section>
+
+      <section class="col-2 graph-container">
+        <h2>Yearly Breakdown.</h2>
+        <div id="yearly-breakdown-stats"></div>
+        <ul>
+          <li>Do you need to spend <span class="color-remaining" id="yearly-remaining">0</span> a year on other things?</li>
+          <li>If you stuck with your plan you'll have saved <span class="color-savings" id="yearly-savings">0</span> this year.</li>
+          <li>All your payments added up to around <span class="color-payments" id="stat-yearly-payments">0</span>.</li>
+          <li>You were paid <span class="color-income" id="yearly-income">0</span> for the year.</li>
         </ul>
       </section>
     </div>

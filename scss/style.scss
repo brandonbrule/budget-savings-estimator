@@ -1,3 +1,7 @@
+#its-wrapper{
+  color:#111;
+}
+
 // -- Variables -- //
 $breakpoint-medium: 840px;
 
@@ -124,7 +128,7 @@ hr{
 
 }
 form{
-  
+
 }
 fieldset{
   border:none;
@@ -262,6 +266,7 @@ form div{ width: auto; float:none; }
     margin: 0;
     list-style: none;
     font-size: 1.25em;
+    border-top:2px solid rgba(255,255,255,0.05);
     background:rgba(0,0,0,0.15);
   }
   li{

@@ -113,7 +113,7 @@ var weekly_breakdown_stats_chart = new Highcharts.Chart({
             type: 'column'
         },
         xAxis: {
-            categories: ['Payments', 'Savings', 'Remaining']
+            categories: ['Income', 'Payments', 'Savings', 'Remaining']
         },
         yAxis:{
         	gridLineWidth: 0,
@@ -133,6 +133,11 @@ var weekly_breakdown_stats_chart = new Highcharts.Chart({
         },
         series: [{
             data: [
+            	{
+            		name: 'Income',
+                    y: 0,
+                    color: '#21a08f'
+                },
             	{
             		name: 'Payments',
                     y: 0,
@@ -165,7 +170,7 @@ var monthly_breakdown_stats_chart = new Highcharts.Chart({
    lineColor: 'transparent',
         },
         xAxis: {
-            categories: ['Payments', 'Savings', 'Remaining'],
+            categories: ['Income', 'Payments', 'Savings', 'Remaining'],
         },
         yAxis:{
         	labels: {
@@ -189,6 +194,11 @@ var monthly_breakdown_stats_chart = new Highcharts.Chart({
         series: [{
             data: [
             	{
+            		name: 'Income',
+                    y: 0,
+                    color: '#21a08f'
+                },
+            	{
             		name: 'Payments',
                     y: 0,
                     color: '#e54d42'
@@ -206,6 +216,136 @@ var monthly_breakdown_stats_chart = new Highcharts.Chart({
             ]
         }]
     });
+
+
+
+
+
+var yearly_breakdown_stats_chart = new Highcharts.Chart({
+
+		chart: {
+            type: 'area',
+            renderTo: 'yearly-breakdown-stats'
+        },
+        title: {
+            text: ''
+        },
+        xAxis: {
+            categories: ['January', 'Feburary', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'],
+            tickmarkPlacement: 'on',
+            title: {
+                enabled: false
+            }
+        },
+        yAxis: {
+            title: {
+                text: 'Billions'
+            },
+            labels: {
+                formatter: function () {
+                    return this.value / 1000;
+                }
+            }
+        },
+        tooltip: {
+            shared: true,
+        },
+        plotOptions: {
+            area: {
+                stacking: 'normal',
+                lineColor: '#666666',
+                lineWidth: 1,
+                marker: {
+                    lineWidth: 1,
+                    lineColor: '#666666'
+                }
+            }
+        },
+        series: [
+	        {
+	            name: 'Income',
+	            data: [0],
+	            color: '#21a08f'
+	        }, 
+	        {
+	            name: 'Payments',
+	            data: [0],
+	            color: '#e54d42'
+	        }, 
+	        {
+	            name: 'Savings',
+	            data: [0],
+	            color: '#f1aa2a'
+	        }, 
+	        {
+	            name: 'Remaining',
+	            data: [0],
+	            color: '#2d7eb6'
+	        }
+        ]
+});
+
+
+
+
+
+
+
+
+
+
+// var yearly_breakdown_stats_chart = new Highcharts.Chart({
+//         title: {
+//             text: ''
+//         },
+//         chart: {
+//         	renderTo: 'yearly-breakdown-stats',
+//             type: 'column'
+//         },
+//         xAxis: {
+//             categories: ['Income', 'Payments', 'Savings', 'Remaining']
+//         },
+//         yAxis:{
+//         	gridLineWidth: 0,
+//             minorGridLineWidth: 0
+//         },
+//         tooltip: {
+//             pointFormat: '${point.y:.1f}</b>'
+//         },
+//         plotOptions: {
+//             series: {
+//                 allowPointSelect: true,
+//                 showInLegend: false,
+//                 dataLabels: {
+//                     enabled: true
+//                 }
+//             }
+//         },
+//         series: [{
+//             data: [
+//             	{
+//             		name: 'Income',
+//                     y: 0,
+//                     color: '#21a08f'
+//                 },
+//             	{
+//             		name: 'Payments',
+//                     y: 0,
+//                     color: '#e54d42'
+//                 },
+//                 {
+//                 	name: 'Savings',
+//                     y: 0,
+//                     color: '#f1aa2a'
+//                 },
+//                 {
+//                 	name: 'Remaining',
+//                     y: 0,
+//                     color: '#2d7eb6'
+//                 }
+//             ]
+//         }]
+//     });
 
 
 // var weekly_breakdown_stats_chart = new Highcharts.Chart({

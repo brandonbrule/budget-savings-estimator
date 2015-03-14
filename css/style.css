@@ -1,3 +1,6 @@
+#its-wrapper {
+  color: #111; }
+
 .color-income {
   color: #21a08f; }
 
@@ -213,6 +216,7 @@ form div {
   margin: 0;
   list-style: none;
   font-size: 1.25em;
+  border-top: 2px solid rgba(255, 255, 255, 0.05);
   background: rgba(0, 0, 0, 0.15); }
 #stats li {
   margin: 0.5em 0; }

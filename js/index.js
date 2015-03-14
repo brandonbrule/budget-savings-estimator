@@ -29,6 +29,18 @@ function annualBreakdown(type,value){
   return annualBreakdown;
 };
 
+function annualBreakdownArray(yearly_value){
+  var yearlyArray = [];
+  var monthly_value = monthly(yearly_value);
+
+  for (var i = 0; i < 12; i++){
+    var count = 1 + i;
+    yearlyArray.push(monthly_value * count);
+  }
+
+  return yearlyArray;
+};
+
 
 function displayBreakdown(heading, object){
 
@@ -368,6 +380,11 @@ var SimpleBudget = {
     var stats_monthly_payments = elById('stat-monthly-payments');
     var stats_monthly_income = elById('monthly-income');
 
+    var stats_yearly_remaining = elById('yearly-remaining');
+    var stats_yearly_savings = elById('yearly-savings');
+    var stats_yearly_payments = elById('stat-yearly-payments');
+    var stats_yearly_income = elById('yearly-income');
+
     // Daily Breakdown
     this.updateStatsChart(daily_breakdown_stats_chart, 'Daily');
 
@@ -376,25 +393,44 @@ var SimpleBudget = {
     stats_daily_income.innerHTML = income.Daily;
     stats_daily_savings.innerHTML = savings.Daily;
 
+    // Weekly Stats
 
+    weekly_breakdown_stats_chart.series[0].setData( [income.Weekly, payments.Weekly, savings.Weekly, remaining.Weekly], true );
+
+    stats_weekly_remaining.innerHTML = remaining.Weekly;
+    stats_weekly_savings.innerHTML = savings.Weekly;
+    stats_weekly_payments.innerHTML = payments.Weekly;
+    stats_weekly_income.innerHTML = income.Weekly;
     
 
     // Monthly Breakdown
-    monthly_breakdown_stats_chart.series[0].setData( [payments.Monthly, savings.Monthly, remaining.Monthly], true );
+    monthly_breakdown_stats_chart.series[0].setData( [income.Monthly, payments.Monthly, savings.Monthly, remaining.Monthly], true );
 
     stats_monthly_remaining.innerHTML = remaining.Monthly;
     stats_monthly_savings.innerHTML = savings.Monthly;
     stats_monthly_payments.innerHTML = payments.Monthly;
     stats_monthly_income.innerHTML = income.Monthly;
 
-    // Monthly Stats
+    // Yearly Stats
 
-    weekly_breakdown_stats_chart.series[0].setData( [payments.Weekly, savings.Weekly, remaining.Weekly], true );
+    var income_annually_array = annualBreakdownArray(income.Yearly);
+    var payments_annually_array = annualBreakdownArray(payments.Yearly);
+    var savings_annually_array = annualBreakdownArray(savings.Yearly);
+    var remaining_annually_array = annualBreakdownArray(remaining.Yearly);
 
-    stats_weekly_remaining.innerHTML = remaining.Weekly;
-    stats_weekly_savings.innerHTML = savings.Weekly;
-    stats_weekly_payments.innerHTML = payments.Weekly;
-    stats_weekly_income.innerHTML = income.Weekly;
+    yearly_breakdown_stats_chart.series[0].setData( income_annually_array, true );
+    yearly_breakdown_stats_chart.series[1].setData( payments_annually_array, true );
+    yearly_breakdown_stats_chart.series[2].setData( savings_annually_array, true );
+    yearly_breakdown_stats_chart.series[3].setData( remaining_annually_array, true );
+
+     //yearly_breakdown_stats_chart.series[0].setData( [income_annually_array, payments_annually_array, savings_annually_array, remaining_annually_array], true );
+
+    stats_yearly_remaining.innerHTML = remaining.Yearly;
+    stats_yearly_savings.innerHTML = savings.Yearly;
+    stats_yearly_payments.innerHTML = payments.Yearly;
+    stats_yearly_income.innerHTML = income.Yearly;
+
+
 
 
 
