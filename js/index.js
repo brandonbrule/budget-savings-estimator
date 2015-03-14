@@ -367,7 +367,7 @@ var SimpleBudget = {
     stats_daily_remaining.innerHTML = remaining.Daily;
     stats_daily_payments.innerHTML = payments.Daily;
     stats_daily_income.innerHTML = income.Daily;
-    stats_daily_savings.innerHTML = savings.Hourly;
+    stats_daily_savings.innerHTML = savings.Daily;
 
     stats_weekly_remaining.innerHTML = remaining.Weekly;
     stats_weekly_savings.innerHTML = savings.Weekly;
