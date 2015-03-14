@@ -1,34 +1,3 @@
-//-- Global Variables
-// --------------------- //
-var savings_graph = elById('savings-graph');
-var high_charts = document.createElement('section');
-
-
-// Income Information
-var array_of_years = [];
-var paycheck;
-var payFrequency;
-var income;
-var annualIncome;
-var incomeOverTime;
-var payments;
-var annualPayments;
-var annualSavings;
-var savings;
-var savingsOverTime;
-var leftover;
-var initialSavings;
-var interest;
-var length_of_savings;
-
-
-
-// Append Highcharts
-high_charts.setAttribute('id', 'container');
-savings_graph.appendChild(high_charts);
-
-
-
 //-- Helper Functions
 //---------------------------//
 
@@ -273,8 +242,8 @@ var SimpleBudget = {
     var savings = annualBreakdown('Savings',savings);
     return savings;
   },
-  leftOver: function(leftovers){
-    var leftover = annualBreakdown('Leftovers', leftovers)
+  leftOver: function(remaining){
+    var leftover = annualBreakdown('Leftovers', remaining)
     return leftover;
   },
   overTime: function(value){
@@ -285,16 +254,47 @@ var SimpleBudget = {
     }
     return yearsObj;
   },
+  resetMainChart: function(chart){
+    var seriesLength = chart.series.length;
+    var navigator;
+    for(var i = seriesLength - 1; i > -1; i--) {
+      if (i > 1){
+        if(chart.series[i].name.toLowerCase() == 'navigator') {
+            navigator = chart.series[i];
+        } else {
+            chart.series[i].remove();
+        }
+      }
+    }
+  },
+  updateStatsChart: function(chart, time_period){
+
+    // Daily Breakdown Stats
+    var dailySum = parseInt( savings[time_period] + payments[time_period] + remaining[time_period] );
+    var chart_data =[
+        [
+          'Payments $' + payments[time_period], parseInt( (payments[time_period] * 100) / dailySum )
+        ],
+        [
+          'Savings $' + savings[time_period], parseInt( (savings[time_period] * 100) / dailySum )
+        ],
+        [
+        'Remaining $' + remaining[time_period], parseInt( (remaining[time_period] * 100) / dailySum )
+        ]
+    ];
+
+    chart.series[0].setData( chart_data, true );
+    chart.series[0].options.color = "#008800";
+    chart.series[0].update(chart.series[0].options);
+
+  },
   calculate: function(){
       
     // Income Information From Forms
     this.getIncomeInformation();
 
     // Reset
-    while( chart.series.length > 0 ) {
-        chart.series[0].remove( false );
-    }
-
+    this.resetMainChart(savings_invesments_overtime_chart);
 
 
 
@@ -317,10 +317,10 @@ var SimpleBudget = {
     
     
     // Left over
-    leftover = (annualIncome - annualPayments);
-    leftover = leftover - (leftover * elById('savings').value * 0.01);
-    leftover = this.leftOver(leftover);
-    displayBreakdown('Leftover', leftover);
+    remaining = (annualIncome - annualPayments);
+    remaining = remaining - (remaining * elById('savings').value * 0.01);
+    remaining = this.leftOver(remaining);
+    displayBreakdown('Remaining', remaining);
 
 
 
@@ -346,15 +346,32 @@ var SimpleBudget = {
     }
   
     // Update Savings and Savings With Interest Chart Information
-    chart.addSeries({
-        name: 'Savings With Interest',
-        data: savingsWithInterest['Total-Compounded']
-    }, false);
-    chart.addSeries({
-        name: 'Savings Over Time',
-        data: savingsOverTime
-    }, false);
-    chart.redraw();
+    savings_invesments_overtime_chart.series[0].setData( savingsWithInterest['Total-Compounded'], true );
+    savings_invesments_overtime_chart.series[1].setData( savingsOverTime, true );
+
+
+
+    // Daily Breakdown Stats
+    this.updateStatsChart(daily_breakdown_stats_chart, 'Daily');
+    // Stats Text
+    var stats_daily_remaining = elById('daily-remaining');
+    var stats_daily_income = elById('daily-income');
+    var stats_hourly_income = elById('hourly-income');
+
+    var stats_weekly_remaining = elById('weekly-remaining');
+    var stats_weekly_savings = elById('weekly-savings');
+    var stats_weekly_payments = elById('weekly-payments');
+
+    stats_daily_remaining.innerHTML = remaining.Daily;
+    stats_daily_income.innerHTML = income.Daily;
+    stats_hourly_income.innerHTML = income.Hourly;
+
+    stats_weekly_remaining.innerHTML = remaining.Weekly;
+    stats_weekly_savings.innerHTML = savings.Weekly;
+    stats_weekly_payments.innerHTML = payments.Weekly;
+
+    // Weekly Breakdown
+    weekly_breakdown_stats_chart.series[0].setData( [payments.Weekly, savings.Weekly, remaining.Weekly], true );
 
   }
 
@@ -384,18 +401,14 @@ var ChartingUpdates = (function () {
     } else {
       savingsWithInterestFees = ['0']
     }
-    chart.addSeries({                        
+    savings_invesments_overtime_chart.addSeries({                        
         name: (100 * interest_data_value) + '% fees',
         data: savingsWithInterestFees['Total-Compounded']
     }, false);
-    chart.redraw();
-
-  
-    // Update Savings and Savings With Interest Chart Information
-    //chart.series[0].setData( savingsWithInterest['Total-Compounded'], true );
-    //chart.series[1].setData( savingsOverTime, true );
+    savings_invesments_overtime_chart.redraw();
 
   };
+
 
   var actionEvents = function(event){
     var action_data_type = event.target.getAttribute('data-action');
@@ -413,6 +426,7 @@ var ChartingUpdates = (function () {
     }
 
   };
+
 
   var init = function () {
     var questions_container = elById('questions-container');
@@ -435,64 +449,14 @@ var ChartingUpdates = (function () {
 ChartingUpdates.init();
 
 
+// Load Default Form Values
+SimpleBudget.calculate();
 
-
-
-
-
-
-
-
-    
 
 // On Submit
+// Resets the Investments Graphs Data when new data is submitted
 elById("submit").onclick = function () {
   var container = elById('results');
   container.innerHTML = '';
   SimpleBudget.calculate();
 };
-
-
-
-
-
-var chart = new Highcharts.Chart({
-      chart: {
-        renderTo: 'container'
-      },
-
-      title: {
-        text: 'Hypothetical Investments',
-        style:{
-          color: '#fff'
-        }
-      },
-
-      xAxis: {
-        categories: [array_of_years],
-        title: {
-          text: 'Years',
-          style:{
-            color: '#fff'
-          }
-        }
-      },
-
-      yAxis: {
-        title: {
-          text: 'Savings',
-          style:{
-            color: '#fff'
-          }
-        }
-      },
-
-
-    });
-
-
-
-// Load form values
-SimpleBudget.calculate();
-
-

@@ -27,6 +27,7 @@ After achieving goal - then get a little more risky.
 Go after 2 - 2.5% Interest.
 GIC 3 - 5 years (locked in interest)
 -->
+<div class="navigation-container">
 <form>
     <fieldset>
     <label for="paycheck">How much do you get paid on your paycheck?</label>
@@ -52,7 +53,7 @@ GIC 3 - 5 years (locked in interest)
     </fieldset>
 
     <fieldset>
-    <label for="monthly-payments">Total Montly Payments - guestimates are fine.</label>    
+    <label for="monthly-payments">Total monthly payments - guestimates are fine.</label>    
     <input name="monthly-payments" value="1600" id="monthly-payments" placeholder="How much are your montly bills? - ex. 350" type="text" >
     </fieldset>
     
@@ -75,28 +76,63 @@ GIC 3 - 5 years (locked in interest)
     <label for="interest">Average compound rate per year?</label>    
     <input name="interest" id="interest" placeholder="Leave blank if you're not investing." value="5" type="text" >
     </fieldset>
-  
-    
-    
+
     <input type="button" name="submit" value="Calculate" id="submit" >
   </form>
+</div>
 
-<div id="results"></div>
-<div id="savings-graph"></div>
-<div id="questions-container">
-  <section class="question">
-    <h2>Understand the impact of fees</h2>
-    <button data-action="fees" data-action-value="0.01">1%</button>
-    <button data-action="fees" data-action-value="0.02">2%</button>
-    <button data-action="fees" data-action-value="0.03">3%</button>
-    <p>They look small, but they add up over time.</p>
-  </section>
+<div class="container">
+  <div id="results"></div>
+  <hr>
+  <div id="savings-investments-overtime-graph"></div>
+  <hr>
+  <div id="questions-container" class="col-container">
+    <section class="question col-2">
+      <h2>Understand the impact of fees</h2>
+      <p>They look small, but they add up over time.</p>
+      <button data-action="fees" data-action-value="0.01">1%</button>
+      <button data-action="fees" data-action-value="0.02">2%</button>
+      <button data-action="fees" data-action-value="0.03">3%</button>
+    </section>
+    <section class="question col-2">
+      <h2>Understand the difference over time.</h2>
+      <p>The more time, the much larger the growth.</p>
+      <button data-action="fees" data-action-value="0.01">10 years</button>
+      <button data-action="fees" data-action-value="0.02">20 years</button>
+      <button data-action="fees" data-action-value="0.03">30 years</button>
+    </section>
+  </div>
+  <hr>
+  <div id="stats">
+    <div class="col-container">
+      <section class="col-2 graph-container">
+        <h2>Daily Breakdown.</h2>
+        <div id="daily-breakdown-stats"></div>
+        <ul>
+          <li>Hey great job! You can spend <span class="color-remaining" id="daily-remaining">$13</span> a day on yourself!</li>
+          <li>It also turns out you're worth <span class="color-income" id="daily-income">$85.45</span> a day.</li>
+          <li>That's <span class="color-income" id="hourly-income">$3.56</span> every hour. Even when you're sleeping.</li>
+        </ul>
+      </section>
+      <section class="col-2 graph-container">
+        <h2>Weekly Breakdown.</h2>
+        <div id="weekly-breakdown-stats"></div>
+        <ul>
+          <li>You should plan to spend no more than <span class="color-remaining" id="weekly-remaining">$80.77</span> a week.</li>
+          <li>Why not make regular contributions of <span class="color-savings" id="weekly-savings">$230.77</span> to your savings?</li>
+          <li>Your payments are starting to add up, you'll need <span class="color-payments" id="weekly-payments">$369.99</span> for your bills.</li>
+        </ul>
+      </section>
+    </div>
+  </div>
 </div>
 
 <script src='http://brandonbrule.github.io/itsa/js/itsa.js'></script>
 
 
 <script src="js/highcharts.js"></script>
+<script src="js/global-variables.js"></script>
+<script src="js/stats-charts.js"></script>
 <script src="js/index.js"></script>
 
 

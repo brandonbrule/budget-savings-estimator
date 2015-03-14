@@ -1,3 +1,26 @@
+// -- Variables -- //
+$breakpoint-medium: 840px;
+
+$color-income : rgb(33, 160, 143);
+$color-payments : rgb(229, 77, 66);
+$color-savings : rgb(241, 170, 42);
+$color-remaining : rgb(45, 126, 182);
+
+.color-income{
+  color: $color-income;
+}
+.color-payments{
+  color: $color-payments;
+}
+.color-savings{
+  color: $color-savings;
+}
+.color-remaining{
+  color: $color-remaining;
+}
+
+
+
 // -- Clearfix -- //
 // @extend .clearfix
 .clearfix {
@@ -64,7 +87,7 @@ body{
   margin:0 auto;
   font-family:Equity-Text-B, arial, helvetica, serif;
   font-size:0.875em;
-  color:#3d3d3d;
+  color:#fff;
 }
 
 header{
@@ -88,12 +111,20 @@ h3{
   margin:0;
   padding:1em;
 }
-form{
-  color:#fff;
+hr{
+  margin: 3em 0;
+}
+
+.navigation-container{
   padding:1%;
-  width:25%;
-  margin-bottom:1em;
-  float:left;
+  position:fixed;
+  top: 50px;
+  left: 0;
+  width: 25%;
+
+}
+form{
+  
 }
 fieldset{
   border:none;
@@ -118,6 +149,19 @@ input[type="button"]{
   margin-top:1em;
   border-top:1px solid #eee;
 }
+
+
+
+.container{
+  width: 75%;
+  float: right;
+  padding: 0.5% 0.5% 0.5% 0;
+}
+
+.col-container{
+  @extend .clearfix;
+}
+
 #results{
   ol{
     padding: 0;
@@ -126,7 +170,8 @@ input[type="button"]{
   }
   li{
     font-size:1.1em; 
-    padding:1em; 
+    padding:1em;
+    color:#3d3d3d;
     margin:0; 
   }
   li:nth-child(odd){ background:rgba(255,255,255,0.45); }
@@ -153,14 +198,11 @@ $colors: #21a08f, #e54d42, #f1aa2a, #2d7eb6;
 $n : 4;
 #results{
   @extend .clearfix;
-  width:75%;
-  padding:0.5% 0.5% 0.5% 0;
-  float:right;
   div{ 
-    @media screen and (max-width: 840px){
+    @media screen and (max-width: $breakpoint-medium){
       @include equalSpaced(2, 2%, 100%);
     }
-    @media screen and (min-width: 840px){
+    @media screen and (min-width: $breakpoint-medium){
       @include equalSpaced(4, 1%, 100%);
     }
     background:#999; 
@@ -174,11 +216,8 @@ $n : 4;
 }
 form div{ width: auto; float:none; }
 
-#savings-graph, #questions-container{
+#savings-graph{
   margin-top:2%;
-  width:75%;
-  padding:0.5% 0.5% 0.5% 0;
-  float:right;
 }
 
 
@@ -186,11 +225,18 @@ form div{ width: auto; float:none; }
   height: 400px;
 }
 
+
+.col-2{
+  margin-bottom:5%;
+  @media screen and (min-width: $breakpoint-medium){
+    @include equalSpaced(2, 3%, 100%);
+    margin-bottom: 0;
+  }
+}
+
+
 #questions-container{
-  margin-top: 0;
-  font-size:1.2em;
-  color:#fff;
-  h2, button{ display: inline-block; }
+  button{ display: inline-block; }
   p{
     margin: 0.5em 0;
   }
@@ -200,9 +246,34 @@ form div{ width: auto; float:none; }
     color:#fff;
     padding: 5px 10px;
     cursor: pointer;
-    margin-left: 1em;
+    margin-right: 1em;
     &:hover{
       background: #e54d42;
     }
   }
+}
+
+#stats{
+  h2{
+    text-align: center;
+  }
+  ul{
+    padding: 1em 2em;
+    margin: 0;
+    list-style: none;
+    font-size: 1.25em;
+    background:rgba(0,0,0,0.15);
+  }
+  li{
+    margin: 0.5em 0;
+  }
+  span{
+    font-size:1.5em;
+    font-weight: 600;
+  }
+}
+
+.graph-container{
+  border:1px solid #fff;
+  padding-top: 1.75em;
 }
