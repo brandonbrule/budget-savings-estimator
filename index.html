@@ -80,7 +80,7 @@ GIC 3 - 5 years (locked in interest)
     <input type="button" name="submit" value="Calculate" id="submit" >
     <div style="margin-top: 1em" class="col-container">
       <!-- <input type="button" class="col-2" onclick="RememberForm.init();" value="Save Settings"> -->
-      <input type="button" class="col-2" onclick="RememberForm.removeLocalStorageItem('investments_localstorage');" value="Clear Saved Settings">
+      <input type="button" class="col-2" onclick="RememberForm.removeLocalStorageItem('investments_localstorage');" value="Clear">
     </div>
   </form>
   <hr>
@@ -189,6 +189,7 @@ var RememberForm = (function () {
     for ( var i = 0, len = inputs.length; i < len; i++ ){
       inputs[i].value = '';
     }
+    location.reload();
   };
   
   // Return Local Storage Item as JS Object

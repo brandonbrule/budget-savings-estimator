@@ -3,7 +3,8 @@
 }
 
 // -- Variables -- //
-$breakpoint-medium: 840px;
+$breakpoint-medium: 600px;
+$breakpoint-large: 1000px;
 
 $color-income : rgb(33, 160, 143);
 $color-payments : rgb(229, 77, 66);
@@ -121,8 +122,10 @@ hr{
 
 .navigation-container{
   padding:1%;
-  float: left;
-  width: 20%;
+  @media screen and (min-width: $breakpoint-medium){
+    float: left;
+    width: 25%;
+  }
 }
 form{
 
@@ -140,8 +143,10 @@ fieldset{
   }
 }
 label{
-  float: left;
-  width: 55%
+  @media screen and (min-width: $breakpoint-medium){
+    float: left;
+    width: 60%;
+  }
 }
 .full-label{
   width: 100%;
@@ -157,11 +162,15 @@ label{
 }
 input{
   display:block;
-  width:100%;
   padding:0.5em;
   box-sizing:border-box;
-  float: right;
-  width: 42%;
+  margin-top: 10px;
+  width: 100%;
+  @media screen and (min-width: $breakpoint-medium){
+    margin-top: 0;
+    float: right;
+    width: 35%;
+  }
 }
 input[type="button"]{
   padding-top:1em;
@@ -172,9 +181,12 @@ input[type="button"]{
 
 
 .container{
-  width: 80%;
-  float: right;
   padding: 0.5% 0.5% 0.5% 0;
+
+  @media screen and (min-width: $breakpoint-medium){
+    width: 75%;
+    float: right;
+  }
 }
 
 .col-container{
@@ -217,10 +229,10 @@ $n : 4;
 #results{
   @extend .clearfix;
   div{ 
-    @media screen and (max-width: $breakpoint-medium){
+    @media screen and (max-width: $breakpoint-large){
       @include equalSpaced(2, 2%, 100%);
     }
-    @media screen and (min-width: $breakpoint-medium){
+    @media screen and (min-width: $breakpoint-large){
       @include equalSpaced(4, 1%, 100%);
     }
     background:#999; 

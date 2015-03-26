@@ -57,9 +57,11 @@ hr {
   margin: 3em 0; }
 
 .navigation-container {
-  padding: 1%;
-  float: left;
-  width: 20%; }
+  padding: 1%; }
+  @media screen and (min-width: 600px) {
+    .navigation-container {
+      float: left;
+      width: 25%; } }
 
 fieldset {
   border: none;
@@ -71,9 +73,10 @@ fieldset {
     border-top: none;
     padding-top: 0; }
 
-label {
-  float: left;
-  width: 55%; }
+@media screen and (min-width: 600px) {
+  label {
+    float: left;
+    width: 60%; } }
 
 .full-label {
   width: 100%;
@@ -88,11 +91,15 @@ label {
 
 input {
   display: block;
-  width: 100%;
   padding: 0.5em;
   box-sizing: border-box;
-  float: right;
-  width: 42%; }
+  margin-top: 10px;
+  width: 100%; }
+  @media screen and (min-width: 600px) {
+    input {
+      margin-top: 0;
+      float: right;
+      width: 35%; } }
 
 input[type="button"] {
   padding-top: 1em;
@@ -100,9 +107,11 @@ input[type="button"] {
   border-top: 1px solid #eee; }
 
 .container {
-  width: 80%;
-  float: right;
   padding: 0.5% 0.5% 0.5% 0; }
+  @media screen and (min-width: 600px) {
+    .container {
+      width: 75%;
+      float: right; } }
 
 #results ol {
   padding: 0;
@@ -135,7 +144,7 @@ input[type="radio"]:first-child {
 
 #results div {
   background: #999; }
-  @media screen and (max-width: 840px) {
+  @media screen and (max-width: 1000px) {
     #results div {
       width: 49%;
       margin-left: 2%;
@@ -149,7 +158,7 @@ input[type="radio"]:first-child {
         margin-top: 0; }
       #results div:nth-child(2) {
         margin-top: 0; } }
-  @media screen and (min-width: 840px) {
+  @media screen and (min-width: 1000px) {
     #results div {
       width: 24.25%;
       margin-left: 1%;
@@ -192,7 +201,7 @@ form div {
 
 .col-2 {
   margin-bottom: 5%; }
-  @media screen and (min-width: 840px) {
+  @media screen and (min-width: 600px) {
     .col-2 {
       width: 48.5%;
       margin-left: 3%;
