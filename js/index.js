@@ -301,6 +301,8 @@ var SimpleBudget = {
 
   },
   calculate: function(){
+
+    document.getElementById('results').innerHTML = '';
       
     // Income Information From Forms
     this.getIncomeInformation();
@@ -470,6 +472,12 @@ var ChartingUpdates = (function () {
 
   };
 
+  var overTime = function(years){
+    var length_of_savings = document.getElementById('length-of-savings');
+    document.getElementById('length-of-savings').value = years;
+    SimpleBudget.calculate();
+  };
+
 
   var actionEvents = function(event){
     var action_data_type = event.target.getAttribute('data-action');
@@ -479,8 +487,8 @@ var ChartingUpdates = (function () {
         case 'fees':
             feesCompounded(action_data_value);
             break;
-        case 'something':
-          
+        case 'time':
+            overTime(action_data_value);
             break;
         default:
             break;
@@ -520,6 +528,7 @@ ChartingUpdates.init();
 function startParty(){
   var container = elById('results');
   container.innerHTML = '';
+  RememberForm.init();
   SimpleBudget.calculate();
 };
 

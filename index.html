@@ -53,58 +53,64 @@ GIC 3 - 5 years (locked in interest)
     </fieldset>
 
     <fieldset>
-    <label for="monthly-payments">Total monthly payments - guestimates are fine.</label>    
+    <label for="monthly-payments">Total monthly payments? <br>Guestimates are fine.</label>    
     <input name="monthly-payments" value="1600" id="monthly-payments" placeholder="How much are your montly bills? - ex. 350" type="text" >
     </fieldset>
     
     <fieldset>
-    <label for="savings">What percent of what's left over would you like to save?</label>    
-    <input name="savings" id="savings" value="65" placeholder="How much would you like to save? ex. 25" type="text" >
+    <label for="savings">How much you wanna save?</label>    
+    <input name="savings" id="savings" value="65" minrange="0" maxrange="100" type="range" >
     </fieldset>
 
     <fieldset>
-      <label for="length-of-savings">How many years do you think you can keep saving like this?</label>    
+      <label for="length-of-savings">How long can you save?</label>    
       <input name="length-of-savings" id="length-of-savings" placeholder="ex. 10" type="text" value="10" >
     </fieldset>
 
     <fieldset>
-      <label for="initial-savings">How much is already saved?</label>    
+      <label for="initial-savings">Current savings?</label>    
       <input name="initial-savings" id="initial-savings" value="0" placeholder="ex. 500" type="text" >
     </fieldset>
     
     <fieldset>
-    <label for="interest">Average compound rate per year?</label>    
+    <label for="interest">Yearly compound rate?</label>    
     <input name="interest" id="interest" placeholder="Leave blank if you're not investing." value="5" type="text" >
     </fieldset>
 
     <input type="button" name="submit" value="Calculate" id="submit" >
     <div style="margin-top: 1em" class="col-container">
-      <input type="button" class="col-2" onclick="RememberForm.init();" value="Save Settings">
-      <input type="button" class="col-2" onclick="localStorage.removeItem('investments_localstorage');" value="Clear Saved Settings">
+      <!-- <input type="button" class="col-2" onclick="RememberForm.init();" value="Save Settings"> -->
+      <input type="button" class="col-2" onclick="RememberForm.removeLocalStorageItem('investments_localstorage');" value="Clear Saved Settings">
     </div>
   </form>
+  <hr>
+  <p>* If your annual income surprises you it's because this assumes your paycheck already handels that tax stuff.  If you need to calculate your own income enter your monthly income after taxes paid once a month.</p>
+  <p>Estimates are fine.</p>
 </div>
 
 <div class="container">
-  <div id="results"><hr><h2>Quick preview with <button onclick="startParty();">Sample Data</button><h2></div>
+  <div id="results"><!-- <hr><h2>Quick preview with <button onclick="startParty();">Sample Data</button><h2> --></div>
   <hr>
   <div id="savings-investments-overtime-graph"></div>
   <hr>
   <div id="questions-container" class="col-container">
+
     <section class="question col-2">
-      <h2>Understand the impact of "low interest" fees</h2>
-      <p>They look small, but they add up over time.</p>
+      <h2>What if you could save longer?.</h2>
+      <p>Compound interest is pretty neat to see the earlier you start saving.</p>
+      <button data-action="time" data-action-value="10">10 years</button>
+      <button data-action="time" data-action-value="20">20 years</button>
+      <button data-action="time" data-action-value="30">30 years</button>
+    </section>
+
+    <section class="question col-2">
+      <h2>See the impact of "low interest" fees</h2>
+      <p>They look small, but they make a big difference.</p>
       <button data-action="fees" data-action-value="0.01">1%</button>
       <button data-action="fees" data-action-value="0.02">2%</button>
       <button data-action="fees" data-action-value="0.03">3%</button>
     </section>
-    <section class="question col-2">
-      <h2>Understand the difference over time.</h2>
-      <p>The more time, the much larger the growth.</p>
-      <button data-action="fees" data-action-value="0.01">10 years</button>
-      <button data-action="fees" data-action-value="0.02">20 years</button>
-      <button data-action="fees" data-action-value="0.03">30 years</button>
-    </section>
+    
   </div>
   <hr>
   <div id="stats">
@@ -179,6 +185,10 @@ var RememberForm = (function () {
   
   var removeLocalStorageItem = function(local_storage_object){
     localStorage.removeItem(local_storage_object);
+    var inputs = document.getElementsByTagName('input');
+    for ( var i = 0, len = inputs.length; i < len; i++ ){
+      inputs[i].value = '';
+    }
   };
   
   // Return Local Storage Item as JS Object
@@ -273,7 +283,7 @@ var RememberForm = (function () {
       setFormLocalStorageObjectWithInputs(form_id);
     }
     
-    removeLocalStorageItem(form_local_storage_object);
+    //removeLocalStorageItem(form_local_storage_object);
     setLocalStorageItem(form_id);
     
     
@@ -301,6 +311,7 @@ var setFormValues = function(){
 }
 
 setFormValues();
+SimpleBudget.calculate();
 
 
 

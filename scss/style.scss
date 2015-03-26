@@ -121,14 +121,14 @@ hr{
 
 .navigation-container{
   padding:1%;
-float:left;
+  float:left;
   width: 25%;
-
 }
 form{
 
 }
 fieldset{
+  @extend .clearfix;
   border:none;
   margin:1.25em 0 0 0;
   padding:1.25em 0 0 0;
@@ -139,12 +139,25 @@ fieldset{
     padding-top:0;
   }
 }
+label{
+  float:left;
+  width: 55%
+}
+.radio-options{
+  float: right;
+  width: 42%;
+  label, input{
+    float: none;
+    width: auto;
+  }
+}
 input{
   display:block;
   width:100%;
   padding:0.5em;
-  margin-top:10px;
   box-sizing:border-box;
+  float: right;
+  width: 42%;
 }
 input[type="button"]{
   padding-top:1em;
@@ -183,7 +196,6 @@ input[type="button"]{
 
 .pays-per-year{
   margin-left:0;
-  margin-top:10px;
 }
 input[type="radio"]{
   display:inline;
