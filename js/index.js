@@ -519,7 +519,7 @@ ChartingUpdates.init();
 
 
 // Load Default Form Values
-//SimpleBudget.calculate();
+SimpleBudget.calculate();
 
 
 // On Submit
