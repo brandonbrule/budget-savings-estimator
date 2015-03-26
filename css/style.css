@@ -59,7 +59,7 @@ hr {
 .navigation-container {
   padding: 1%;
   float: left;
-  width: 25%; }
+  width: 20%; }
 
 fieldset {
   border: none;
@@ -75,9 +75,13 @@ label {
   float: left;
   width: 55%; }
 
+.full-label {
+  width: 100%;
+  float: none; }
+
 .radio-options {
-  float: right;
-  width: 42%; }
+  width: 100%;
+  margin-top: 10px; }
   .radio-options label, .radio-options input {
     float: none;
     width: auto; }
@@ -96,7 +100,7 @@ input[type="button"] {
   border-top: 1px solid #eee; }
 
 .container {
-  width: 75%;
+  width: 80%;
   float: right;
   padding: 0.5% 0.5% 0.5% 0; }
 
