@@ -360,8 +360,9 @@ var SimpleBudget = {
     }
   
     // Update Savings and Savings With Interest Chart Information
-    savings_invesments_overtime_chart.series[0].setData( savingsWithInterest['Total-Compounded'], true );
-    savings_invesments_overtime_chart.series[1].setData( savingsOverTime, true );
+    savings_invesments_overtime_chart.series[0].setData( savingsOverTime, true );
+    savings_invesments_overtime_chart.series[1].setData( savingsWithInterest['Total-Compounded'], true );
+    
 
 
 
@@ -425,16 +426,10 @@ var SimpleBudget = {
     yearly_breakdown_stats_chart.series[2].setData( savings_annually_array, true );
     yearly_breakdown_stats_chart.series[3].setData( remaining_annually_array, true );
 
-     //yearly_breakdown_stats_chart.series[0].setData( [income_annually_array, payments_annually_array, savings_annually_array, remaining_annually_array], true );
-
     stats_yearly_remaining.innerHTML = remaining.Yearly;
     stats_yearly_savings.innerHTML = savings.Yearly;
     stats_yearly_payments.innerHTML = payments.Yearly;
     stats_yearly_income.innerHTML = income.Yearly;
-
-
-
-
 
   }
 
@@ -514,12 +509,7 @@ var ChartingUpdates = (function () {
 
 })();
 
-// Set up all the events
-ChartingUpdates.init();
 
-
-// Load Default Form Values
-SimpleBudget.calculate();
 
 
 // On Submit
@@ -534,4 +524,36 @@ function startParty(){
 
 elById("submit").onclick = function () {
   startParty();
+  //return false;
 };
+
+
+(function(){
+  var inputs = document.getElementsByTagName('input');
+
+  for (var i = 0, len = inputs.length; i < len; i++){
+    var input = inputs[i];
+    var type = input.getAttribute('type');
+
+    if (type === 'range' || type === 'radio' ){
+      input.addEventListener('change', function(){
+        startParty();
+      });
+    } else if (type === 'text'){
+      input.addEventListener('keyup', function(){
+        startParty();
+      });
+    }
+  }
+})();
+
+
+
+
+// elById("quick-savings-submit").onclick = function () {
+//   var savings = elById('quick-savings-savings').value * 12;
+//   var savingsPerYear = SimpleBudget.savings(savings);
+//   displayBreakdown('Savings', savingsPerYear);
+// };
+
+//its.a(SimpleBudget.savings(100));

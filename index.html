@@ -9,8 +9,14 @@
 </head>
 
 <body>
-  <header><h1>Simple Budget Estimator</h1></header>
-
+<!--   <header><h1>Simple Budget Estimator</h1>
+  <div id="quick-savings">
+    Already have a monthly budget in mind?
+    <input id="quick-savings-savings" type="number" value="100">
+    <button id="quick-savings-submit">Submit</button>
+  </div>
+</header>
+ -->
   <!-- Interest and Inflation 
 Ask for advisor
 Look for goals - Want to buy a house in 5 years
@@ -27,13 +33,9 @@ After achieving goal - then get a little more risky.
 Go after 2 - 2.5% Interest.
 GIC 3 - 5 years (locked in interest)
 -->
+
 <div class="navigation-container">
 <form id="savings-form">
-    <fieldset>
-    <label for="paycheck">How much do you get paid on your paycheck?</label>
-    <input name="paycheck" value="1200" id="paycheck" placeholder="How much do you get on your paycheck - ex. 2200" type="text" >
-    </fieldset>
-
     <fieldset>
     <label class="full-label" for="frequency-of-pay">How often do you get paid?</label>
     <div class="pays-per-year radio-options">
@@ -53,17 +55,24 @@ GIC 3 - 5 years (locked in interest)
     </fieldset>
 
     <fieldset>
-    <label for="monthly-payments">Total monthly payments? <br>Guestimates are fine.</label>    
+    <label for="paycheck">How much is on your paycheck?</label>
+    <input name="paycheck" value="1200" id="paycheck" placeholder="How much do you get on your paycheck - ex. 2200" type="text" >
+    </fieldset>
+
+    
+
+    <fieldset>
+    <label for="monthly-payments">Monthly expenses? <br>Guestimates are fine.</label>    
     <input name="monthly-payments" value="1600" id="monthly-payments" placeholder="How much are your montly bills? - ex. 350" type="text" >
     </fieldset>
     
     <fieldset>
-    <label for="savings">How much you wanna save?</label>    
+    <label for="savings">How much do you want to save?</label>    
     <input name="savings" id="savings" value="65" minrange="0" maxrange="100" type="range" >
     </fieldset>
 
     <fieldset>
-      <label for="length-of-savings">How long can you save?</label>    
+      <label for="length-of-savings">How many years can you save?</label>    
       <input name="length-of-savings" id="length-of-savings" placeholder="ex. 10" type="text" value="10" >
     </fieldset>
 
@@ -73,34 +82,36 @@ GIC 3 - 5 years (locked in interest)
     </fieldset>
     
     <fieldset>
-    <label for="interest">Yearly compound rate?</label>    
+    <label for="interest">Average interest? (5 = 5%)</label>    
     <input name="interest" id="interest" placeholder="Leave blank if you're not investing." value="5" type="text" >
     </fieldset>
-
-    <input type="button" name="submit" value="Calculate" id="submit" >
-    <div style="margin-top: 1em" class="col-container">
-      <!-- <input type="button" class="col-2" onclick="RememberForm.init();" value="Save Settings"> -->
-      <input type="button" class="col-2" onclick="RememberForm.removeLocalStorageItem('investments_localstorage');" value="Clear">
-    </div>
+    <fieldset>
+      
+      <div class="col-container">
+        <!-- <input type="button" class="col-2" onclick="RememberForm.init();" value="Save Settings"> -->
+        <input id="clear" type="button" class="col-2" value="Clear">
+        <input type="button" class="col-2 button"value="Submit" name="submit" id="submit" >
+      </div>
+    </fieldset>
   </form>
-  <hr>
-  <p>* If your annual income surprises you it's because this assumes your paycheck already handels that tax stuff.  If you need to calculate your own income enter your monthly income after taxes paid once a month.</p>
+  <p>* If your annual income surprises you it's because this assumes your paycheck already handels that tax stuff.</p>
+  <p>If you need to calculate your own income enter your monthly income after taxes paid once a month.</p>
   <p>Estimates are fine.</p>
 </div>
 
 <div class="container">
   <div id="results"><!-- <hr><h2>Quick preview with <button onclick="startParty();">Sample Data</button><h2> --></div>
-  <hr>
   <div id="savings-investments-overtime-graph"></div>
-  <hr>
+
   <div id="questions-container" class="col-container">
 
     <section class="question col-2">
-      <h2>What if you could save longer?.</h2>
-      <p>Compound interest is pretty neat to see the earlier you start saving.</p>
+      <h2>What if you saved longer?</h2>
+      <p>You know, for retirement or something.</p>
       <button data-action="time" data-action-value="10">10 years</button>
       <button data-action="time" data-action-value="20">20 years</button>
       <button data-action="time" data-action-value="30">30 years</button>
+      <button data-action="time" data-action-value="40">40 years</button>
     </section>
 
     <section class="question col-2">
@@ -311,7 +322,21 @@ var setFormValues = function(){
   }
 }
 
-setFormValues();
+elById('clear').addEventListener('click', function(){
+  RememberForm.removeLocalStorageItem('investments_localstorage');
+  window.location = rootURL;
+});
+
+if (localStorage.getItem('investments_localstorage')) {
+  setFormValues();
+}
+
+// Set up all the events
+ChartingUpdates.init();
+
+
+// Load Default Form Values
+SimpleBudget.calculate();
 
 </script>
 

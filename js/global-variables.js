@@ -1,5 +1,6 @@
 //-- Global Variables
 // --------------------- //
+var rootURL = window.location.origin + window.location.pathname + window.location.hash;
 
 
 // Income Information

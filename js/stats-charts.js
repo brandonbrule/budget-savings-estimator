@@ -4,7 +4,7 @@ var savings_invesments_overtime_chart = new Highcharts.Chart({
       },
 
       title: {
-        text: 'Hypothetical Investments',
+        text: 'Savings Over Time',
         style:{
           color: '#fff'
         }
@@ -26,22 +26,39 @@ var savings_invesments_overtime_chart = new Highcharts.Chart({
           style:{
             color: '#fff'
           }
+        },
+        stackLabels: {
+            enabled: true,
         }
       },
 
+      plotOptions: {
+            column: {
+                dataLabels: {
+                    enabled: true,
+                    color: (Highcharts.theme && Highcharts.theme.dataLabelsColor) || 'white',
+                }
+            },
+            series: {
+                borderWidth: 0
+            }
+        },
+
       series: [
+        {
+          name: 'Savings',
+          style:{
+            color: '#fff'
+          },
+          type: 'column',
+          data: [0]
+        },
         {
           name: 'Savings With Interest',
           style:{
             color: '#fff'
           },
-          data: [0]
-        },
-        {
-          name: 'Savings Without Interest',
-          style:{
-            color: '#fff'
-          },
+          type: 'column',
           data: [0]
         }
       ]
@@ -52,7 +69,11 @@ var savings_invesments_overtime_chart = new Highcharts.Chart({
 
 
 
-// Stats Chart
+
+
+// ---------------------- //
+// Daily Breakdown Chart
+// ---------------------- //
 var daily_breakdown_stats_chart = new Highcharts.Chart({
         chart: {
             renderTo: 'daily-breakdown-stats'
@@ -72,6 +93,9 @@ var daily_breakdown_stats_chart = new Highcharts.Chart({
                     format: '<b>{point.percentage:.1f} %'
                 },
                 showInLegend: true
+            },
+            series: {
+                borderWidth: 0
             }
         },
         series: [
@@ -101,6 +125,12 @@ var daily_breakdown_stats_chart = new Highcharts.Chart({
 
 
 
+
+
+
+// ---------------------- //
+// Weekly Breakdown Chart
+// ---------------------- //
 var weekly_breakdown_stats_chart = new Highcharts.Chart({
         title: {
             text: ''
@@ -123,6 +153,7 @@ var weekly_breakdown_stats_chart = new Highcharts.Chart({
             series: {
                 allowPointSelect: true,
                 showInLegend: false,
+                borderWidth: 0,
                 dataLabels: {
                     enabled: true
                 }
@@ -157,6 +188,11 @@ var weekly_breakdown_stats_chart = new Highcharts.Chart({
 
 
 
+
+
+// ---------------------- //
+// Monthly Breakdown Chart
+// ---------------------- //
 var monthly_breakdown_stats_chart = new Highcharts.Chart({
         title: {
             text: ''
@@ -185,6 +221,7 @@ var monthly_breakdown_stats_chart = new Highcharts.Chart({
             series: {
                 allowPointSelect: true,
                 showInLegend: false,
+                borderWidth: 0,
                 dataLabels: {
                     enabled: true
                 }
@@ -220,6 +257,9 @@ var monthly_breakdown_stats_chart = new Highcharts.Chart({
 
 
 
+// ---------------------- //
+// Yearly Breakdown Chart
+// ---------------------- //
 var yearly_breakdown_stats_chart = new Highcharts.Chart({
 
 		chart: {
@@ -248,6 +288,7 @@ var yearly_breakdown_stats_chart = new Highcharts.Chart({
                 stacking: 'normal',
                 lineColor: '#666666',
                 lineWidth: 1,
+                borderWidth: 0,
                 marker: {
                     lineWidth: 1,
                     lineColor: '#666666'

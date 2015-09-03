@@ -373,7 +373,7 @@ i),d.exportMenuWidth=i.offsetWidth,d.exportMenuHeight=i.offsetHeight;a={display:
    colors: ["#2b908f", "#f1aa2a", "#f45b5b", "#7798BF", "#aaeeee", "#ff0066", "#eeaaee",
       "#55BF3B", "#DF5353", "#7798BF", "#aaeeee"],
    chart: {
-      backgroundColor: '#222222',
+      backgroundColor: '#2A2A32',
       style: {
          fontFamily: "'Unica One', sans-serif"
       },
