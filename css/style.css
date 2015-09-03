@@ -21,26 +21,30 @@
 /* apply a natural box layout model to all elements, but allowing components to change */
 html {
   box-sizing: border-box;
-  background: #222; }
+  background: #2A2A32; }
 
 *, *:before, *:after {
   box-sizing: inherit; }
 
 body {
   margin: 0 auto;
-  font-family: Equity-Text-B, arial, helvetica, serif;
-  font-size: 0.875em;
+  font-family: Calibri,Arial,helvetica,sans-serif;
+  font-size: 1.15em;
   color: #fff; }
 
 header {
-  background: #444;
-  padding: 1em;
-  border-bottom: 2px solid #cecece; }
+  background: #1C1D22;
+  padding: 0.65em;
+  border-bottom: 1px solid #333540;
+  border-top: 1px solid #333540;
+  font-family: georgia, Equity-Text-B,serif; }
 
 h1 {
   margin: 0;
   color: #fff;
-  font-size: 1em; }
+  font-size: 1.35em;
+  font-weight: 100;
+  letter-spacing: 1.35px; }
 
 h2 {
   margin: 0; }
@@ -51,10 +55,11 @@ h3 {
   background: rgba(0, 0, 0, 0.03);
   color: #fff;
   margin: 0;
-  padding: 1em; }
+  padding: 0.65em; }
 
 hr {
-  margin: 3em 0; }
+  margin: 2em 0;
+  border-color: #333540; }
 
 .navigation-container {
   padding: 1%; }
@@ -67,7 +72,7 @@ fieldset {
   border: none;
   margin: 1.25em 0 0 0;
   padding: 1.25em 0 0 0;
-  border-top: 1px solid #eee; }
+  border-top: 1px solid #333540; }
   fieldset:first-child {
     margin-top: 0;
     border-top: none;
@@ -94,20 +99,25 @@ input {
   padding: 0.5em;
   box-sizing: border-box;
   margin-top: 10px;
-  width: 100%; }
+  font-size: 1.15em;
+  text-align: center;
+  width: 100%;
+  background: #333540;
+  border: none;
+  color: #fff; }
   @media screen and (min-width: 600px) {
     input {
       margin-top: 0;
       float: right;
       width: 35%; } }
 
-input[type="button"] {
-  padding-top: 1em;
-  margin-top: 1em;
-  border-top: 1px solid #eee; }
+input[type="button"], .button {
+  font-size: 1em;
+  border: 1px solid #efefef;
+  cursor: pointer; }
 
 .container {
-  padding: 0.5% 0.5% 0.5% 0; }
+  padding: 0.65% 0.5% 0.5% 0; }
   @media screen and (min-width: 600px) {
     .container {
       width: 75%;
@@ -118,8 +128,7 @@ input[type="button"] {
   margin: 0;
   list-style: none; }
 #results li {
-  font-size: 1.1em;
-  padding: 1em;
+  padding: 0.65em;
   color: #3d3d3d;
   margin: 0; }
 #results li:nth-child(odd) {
@@ -220,9 +229,11 @@ form div {
 #questions-container button {
   display: inline-block; }
 #questions-container p {
-  margin: 0.5em 0; }
+  margin: 0.5em 0;
+  padding-bottom: 0.5em;
+  border-bottom: 1px dotted #333540; }
 #questions-container button {
-  border: 2px solid #fff;
+  border: 1px solid #fff;
   background: none;
   color: #fff;
   padding: 5px 10px;
@@ -234,11 +245,9 @@ form div {
 #stats h2 {
   text-align: center; }
 #stats ul {
-  padding: 1em 2em;
+  padding: 0.5em 0.85em;
   margin: 0;
   list-style: none;
-  font-size: 1.25em;
-  border-top: 2px solid rgba(255, 255, 255, 0.05);
   background: rgba(0, 0, 0, 0.15); }
 #stats li {
   margin: 0.5em 0; }
@@ -247,7 +256,9 @@ form div {
   font-weight: 600; }
 
 .graph-container {
-  border: 1px solid #fff;
   padding-top: 1.75em; }
+
+#savings-investments-overtime-graph {
+  margin: 2% 0; }
 
 /*# sourceMappingURL=style.css.map */
