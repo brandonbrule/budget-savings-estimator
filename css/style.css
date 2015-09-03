@@ -67,6 +67,9 @@ hr {
     .navigation-container {
       float: left;
       width: 25%; } }
+  @media screen and (min-width: 1400px) {
+    .navigation-container {
+      position: fixed; } }
 
 fieldset {
   border: none;

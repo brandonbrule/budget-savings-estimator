@@ -131,6 +131,9 @@ hr{
     float: left;
     width: 25%;
   }
+  @media screen and (min-width: 1400px){
+    position:fixed;
+  }
 }
 form{
 
