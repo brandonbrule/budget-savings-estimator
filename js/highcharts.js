@@ -374,6 +374,7 @@ i),d.exportMenuWidth=i.offsetWidth,d.exportMenuHeight=i.offsetHeight;a={display:
       "#55BF3B", "#DF5353", "#7798BF", "#aaeeee"],
    chart: {
       backgroundColor: '#2A2A32',
+      animation: false,
       style: {
          fontFamily: "'Unica One', sans-serif"
       },
@@ -437,6 +438,7 @@ i),d.exportMenuWidth=i.offsetWidth,d.exportMenuHeight=i.offsetHeight;a={display:
          dataLabels: {
             color: '#B0B0B3'
          },
+         animation: false,
          marker: {
             lineColor: '#333'
          }
@@ -562,5 +564,5 @@ i),d.exportMenuWidth=i.offsetWidth,d.exportMenuHeight=i.offsetHeight;a={display:
    maskColor: 'rgba(255,255,255,0.3)'
 };
 
-// Apply the theme
+
 Highcharts.setOptions(Highcharts.theme);

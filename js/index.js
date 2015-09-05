@@ -42,32 +42,75 @@ function annualBreakdownArray(yearly_value){
 };
 
 
-function displayBreakdown(heading, object){
+function displayBreakdown(object){
+
+  //its.a(object);
 
   var container = elById('results');
-  var el = document.createElement('div');
-  var header = document.createElement('h3');
-  var list_container = document.createElement('ol');
 
-  // Heading
-  header.innerHTML = heading;
-  el.appendChild(header);
+  // No elements yet, create elements.
+  if (container.children.length < 1){
 
-  for (var key in object) {
-    if (object.hasOwnProperty(key)) {
+    for (var key in object) {
+      if (object.hasOwnProperty(key)) {
+        var el = document.createElement('div');
+        var header = document.createElement('h3');
+        var list_container = document.createElement('ol');
 
-      var list_item = document.createElement('li');
-      var value = '<strong>' + round(object[key]) + '</strong>';
-         
-      list_item.innerHTML = key + ' ' + value;
-      list_container.appendChild( list_item );
+        header.innerHTML = key;
+        el.appendChild(header);
 
+        var breakdown_object = object[key];
+
+        for (var breakdown_type in breakdown_object) {
+          if (breakdown_object.hasOwnProperty(breakdown_type)) {
+            var list_item = document.createElement('li');
+            var value = '<strong>' + round(breakdown_object[breakdown_type]) + '</strong>';
+               
+            list_item.innerHTML = breakdown_type + ' ' + value;
+            list_container.appendChild( list_item );
+          }
+        }
+
+        el.appendChild(list_container);
+        container.appendChild(el);
+
+      }
+     
     }
-   
-  }
 
-  el.appendChild(list_container);
-  container.appendChild(el);
+    
+
+  // Elements Exist, just set the inner html of values.  
+  }else{
+    //its.a('children');
+    var displayBoxes = container.getElementsByTagName('div');
+    for (var i = 0, len = displayBoxes.length; i < len; i++){
+      var displayBox = displayBoxes[i];
+      var header = displayBox.getElementsByTagName('h3')[0];
+      var headerText = header.innerHTML;
+      var list_container = displayBox.getElementsByTagName('ol')[0];
+      var breakdown_object = object[headerText];
+      var breakdown_array = [];
+
+      for (var breakdown_type in breakdown_object) {
+        if (breakdown_object.hasOwnProperty(breakdown_type)) {
+          var str = round(breakdown_object[breakdown_type]);
+          breakdown_array.push( (str) );
+        }
+      }
+
+      var list_items = list_container.getElementsByTagName('strong');
+      for (var j = 0, length = list_items.length; j < length; j++){
+        var list_item = list_items[j];
+        var value = breakdown_array[j];
+        list_item.innerHTML = value;
+      }
+      
+    }
+
+  }
+  
 };
 
 
@@ -300,47 +343,13 @@ var SimpleBudget = {
     chart.series[0].update(chart.series[0].options);
 
   },
-  calculate: function(){
 
-    document.getElementById('results').innerHTML = '';
-      
-    // Income Information From Forms
-    this.getIncomeInformation();
-
+  updateSavingsOverTime: function(){
     // Reset
     this.resetMainChart(savings_invesments_overtime_chart);
 
-
-
-    // Income
-    annualIncome = this.annualIncome();
-    income = this.income(annualIncome);
-    displayBreakdown('Income', income);
-
-
-    //Payments
-    payments = this.payments(annualPayments);
-    displayBreakdown('Payments', payments);
-
-
-    // Savings
-    annualSavings = ( (elById('savings').value * 0.01) * ( annualIncome - annualPayments) ) ;
-    savings = this.savings(annualSavings);
-    displayBreakdown('Savings', savings);
-
-    
-    
-    // Left over
-    remaining = (annualIncome - annualPayments);
-    remaining = remaining - (remaining * elById('savings').value * 0.01);
-    remaining = this.leftOver(remaining);
-    displayBreakdown('Remaining', remaining);
-
-
-
     // // Savings over time
     savingsOverTime = this.overTime(annualSavings, length_of_savings);
-
 
     // Savings with Interest
     var custom_config = {
@@ -362,9 +371,49 @@ var SimpleBudget = {
     // Update Savings and Savings With Interest Chart Information
     savings_invesments_overtime_chart.series[0].setData( savingsOverTime, true );
     savings_invesments_overtime_chart.series[1].setData( savingsWithInterest['Total-Compounded'], true );
+  },
+
+  calculate: function(){
+
+    //document.getElementById('results').innerHTML = '';
+      
+    // Income Information From Forms
+    this.getIncomeInformation();
+
+    // Income
+    annualIncome = this.annualIncome();
+    income = this.income(annualIncome);
+    //displayBreakdown('Income', income);
+
+
+    //Payments
+    payments = this.payments(annualPayments);
+    //displayBreakdown('Payments', payments);
+
+
+    // Savings
+    annualSavings = ( (elById('savings').value * 0.01) * ( annualIncome - annualPayments) ) ;
+    savings = this.savings(annualSavings);
+    //displayBreakdown('Savings', savings);
+
     
+    
+    // Left over
+    remaining = (annualIncome - annualPayments);
+    remaining = remaining - (remaining * elById('savings').value * 0.01);
+    remaining = this.leftOver(remaining);
+    //displayBreakdown('Remaining', remaining);
 
+    var entry_object = {
+      income: income,
+      payments: payments,
+      savings: savings,
+      remaining: remaining
+    }
 
+    displayBreakdown(entry_object);
+
+    this.updateSavingsOverTime();
 
     
     // Stats Text
@@ -388,13 +437,14 @@ var SimpleBudget = {
     var stats_yearly_payments = elById('stat-yearly-payments');
     var stats_yearly_income = elById('yearly-income');
 
-    // Daily Breakdown
-    this.updateStatsChart(daily_breakdown_stats_chart, 'Daily');
-
     stats_daily_remaining.innerHTML = remaining.Daily;
     stats_daily_payments.innerHTML = payments.Daily;
     stats_daily_income.innerHTML = income.Daily;
     stats_daily_savings.innerHTML = savings.Daily;
+
+
+    // Daily Stats
+    this.updateStatsChart(daily_breakdown_stats_chart, 'Daily');
 
     // Weekly Stats
 
@@ -516,8 +566,6 @@ var ChartingUpdates = (function () {
 // Resets the Investments Graphs Data when new data is submitted
 
 function startParty(){
-  var container = elById('results');
-  container.innerHTML = '';
   RememberForm.init();
   SimpleBudget.calculate();
 };
