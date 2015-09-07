@@ -115,6 +115,17 @@ function displayBreakdown(object){
 
 
 
+function debounce(fn, delay) {
+  var timer = null;
+  return function () {
+    var context = this, args = arguments;
+    clearTimeout(timer);
+    timer = setTimeout(function () {
+      fn.apply(context, args);
+    }, delay);
+  };
+}
+
 
 
 
@@ -374,8 +385,6 @@ var SimpleBudget = {
   },
 
   calculate: function(){
-
-    //document.getElementById('results').innerHTML = '';
       
     // Income Information From Forms
     this.getIncomeInformation();
@@ -385,11 +394,9 @@ var SimpleBudget = {
     income = this.income(annualIncome);
     //displayBreakdown('Income', income);
 
-
     //Payments
     payments = this.payments(annualPayments);
     //displayBreakdown('Payments', payments);
-
 
     // Savings
     annualSavings = ( (elById('savings').value * 0.01) * ( annualIncome - annualPayments) ) ;
@@ -414,28 +421,6 @@ var SimpleBudget = {
     displayBreakdown(entry_object);
 
     this.updateSavingsOverTime();
-
-    
-    // Stats Text
-    var stats_daily_remaining = elById('daily-remaining');
-    var stats_daily_payments = elById('daily-payments');
-    var stats_daily_income = elById('daily-income');
-    var stats_daily_savings = elById('daily-savings');
-
-    var stats_weekly_remaining = elById('weekly-remaining');
-    var stats_weekly_savings = elById('weekly-savings');
-    var stats_weekly_payments = elById('weekly-payments');
-    var stats_weekly_income = elById('weekly-income');
-
-    var stats_monthly_remaining = elById('monthly-remaining');
-    var stats_monthly_savings = elById('monthly-savings');
-    var stats_monthly_payments = elById('stat-monthly-payments');
-    var stats_monthly_income = elById('monthly-income');
-
-    var stats_yearly_remaining = elById('yearly-remaining');
-    var stats_yearly_savings = elById('yearly-savings');
-    var stats_yearly_payments = elById('stat-yearly-payments');
-    var stats_yearly_income = elById('yearly-income');
 
     stats_daily_remaining.innerHTML = remaining.Daily;
     stats_daily_payments.innerHTML = payments.Daily;
@@ -588,9 +573,12 @@ elById("submit").onclick = function () {
         startParty();
       });
     } else if (type === 'text'){
-      input.addEventListener('keyup', function(){
+
+      input.addEventListener('keyup', debounce(function (event) {
+        // do the Ajax request
         startParty();
-      });
+      }, 550) );
+
     }
   }
 })();
