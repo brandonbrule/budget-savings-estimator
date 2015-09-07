@@ -52,7 +52,6 @@ h2 {
 h3 {
   font-size: 1.15em;
   font-weight: 600;
-  background: rgba(0, 0, 0, 0.03);
   color: #fff;
   margin: 0;
   padding: 0.65em; }
@@ -250,8 +249,7 @@ form div {
 #stats ul {
   padding: 0.5em 0.85em;
   margin: 0;
-  list-style: none;
-  background: rgba(0, 0, 0, 0.15); }
+  list-style: none; }
 #stats li {
   margin: 0.5em 0; }
 #stats span {

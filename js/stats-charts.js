@@ -4,7 +4,7 @@ var savings_invesments_overtime_chart = new Highcharts.Chart({
       },
 
       title: {
-        text: 'Savings Over Time',
+        text: '',
         style:{
           color: '#fff'
         }

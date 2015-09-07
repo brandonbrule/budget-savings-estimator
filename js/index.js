@@ -1,11 +1,4 @@
-//-- Helper Functions
-//---------------------------//
 
-// Get Element By Id Function - Thanks Brett Tackaberry.
-function elById(arg){ return document.getElementById(arg); };
-
-// Return Value and Display to HTML Elements Round to nearest 0.00x
-function round(arg){ return Math.round(arg * 100) / 100; };
 
 // Useful Math Functions
 // -------------------------- //
