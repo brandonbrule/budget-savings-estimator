@@ -73,8 +73,8 @@ hr {
 
 fieldset {
   border: none;
-  margin: 1.25em 0 0 0;
-  padding: 1.25em 0 0 0;
+  margin: 0.585em 0 0 0;
+  padding: 0.585em 0 0 0;
   border-top: 1px solid #333540; }
   fieldset:first-child {
     margin-top: 0;
@@ -99,7 +99,7 @@ fieldset {
 
 input {
   display: block;
-  padding: 0.5em;
+  padding: 0.25em;
   box-sizing: border-box;
   margin-top: 10px;
   font-size: 1.15em;
