@@ -377,15 +377,15 @@ var SimpleBudget = {
     
     // Remaining
     remaining = annualIncome - annualPayments;
-    elById('savings').max = remaining;
+    elById('savings').max = remaining / 12;
    
     // Savings
-    annualSavings = elById('savings').value;
-    elById('savings-value').innerHTML = round(annualSavings / 12);
+    annualSavings = elById('savings').value * 12;
+    
     savings = annualBreakdown('Savings', annualSavings);
 
     // Annual Remaining
-    annualRemaining = remaining - parseInt(elById('savings').value);
+    annualRemaining = remaining - parseInt(elById('savings').value * 12);
     remaining = annualBreakdown('Leftovers', annualRemaining);
 
     var entry_object = {
@@ -545,7 +545,7 @@ elById("submit").onclick = function () {
     var input = inputs[i];
     var type = input.getAttribute('type');
 
-    if (type === 'range' || type === 'radio' ){
+    if (type === 'range' || type === 'radio' || type === 'number'){
       input.addEventListener('change', function(){
         startParty();
       });
