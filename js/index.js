@@ -358,8 +358,6 @@ var SimpleBudget = {
   },
 
   calculate: function(){
-
-    its.clearAll();
       
     // Income Information From Forms
     this.getIncomeInformation();
@@ -374,7 +372,7 @@ var SimpleBudget = {
     // Remaining
     user_data.remaining = user_data.income.Monthly - user_data.payments.Monthly;
     input_savings.max = user_data.remaining;
-    input_savings.max = user_data.remaining;
+    
    
     // Savings
     user_data.savings = annualBreakdown(input_savings.value * 12);
@@ -453,7 +451,7 @@ var ChartingUpdates = (function () {
   var questions_container = document.getElementById('questions-container');
 
   var feesCompounded = function(interest_data_value){
-    
+
     // Savings with Interest
     var custom_config = {
       principle_value : user_data.initial_savings,
