@@ -256,7 +256,7 @@ var Investing = (function () {
 var SimpleBudget = {
   getIncomeInformation: function(){
     annualPayments = monthToYear( parseInt( elById('monthly-payments').value ) );
-    savings = parseInt( elById('savings').value * 0.01 );
+    savings = parseInt( elById('savings').value );
     initialSavings = parseInt( elById('initial-savings').value );
     interest = elById('interest').value * 0.01;
     length_of_savings = parseInt( elById('length-of-savings').value );
@@ -288,22 +288,6 @@ var SimpleBudget = {
 
     return annualIncome;
 
-  },
-  income: function(annualIncome){
-    var income = annualBreakdown('Income', annualIncome);
-    return income;
-  },
-  payments: function(monthlyPayments){
-    var payments = annualBreakdown('Payments', monthlyPayments);
-    return payments;
-  },
-  savings: function(savings){
-    var savings = annualBreakdown('Savings',savings);
-    return savings;
-  },
-  leftOver: function(remaining){
-    var leftover = annualBreakdown('Leftovers', remaining)
-    return leftover;
   },
   overTime: function(value){
     var yearsObj = [];
@@ -378,31 +362,31 @@ var SimpleBudget = {
   },
 
   calculate: function(){
+
+    its.clearAll();
       
     // Income Information From Forms
     this.getIncomeInformation();
 
     // Income
     annualIncome = this.annualIncome();
-    income = this.income(annualIncome);
-    //displayBreakdown('Income', income);
+    income = annualBreakdown('Income', annualIncome);
 
-    //Payments
-    payments = this.payments(annualPayments);
-    //displayBreakdown('Payments', payments);
-
+    // Payments
+    payments = annualBreakdown('Payments', annualPayments);
+    
+    // Remaining
+    remaining = annualIncome - annualPayments;
+    elById('savings').max = remaining;
+   
     // Savings
-    annualSavings = ( (elById('savings').value * 0.01) * ( annualIncome - annualPayments) ) ;
-    savings = this.savings(annualSavings);
-    //displayBreakdown('Savings', savings);
+    annualSavings = elById('savings').value;
+    elById('savings-value').innerHTML = round(annualSavings / 12);
+    savings = annualBreakdown('Savings', annualSavings);
 
-    
-    
-    // Left over
-    remaining = (annualIncome - annualPayments);
-    remaining = remaining - (remaining * elById('savings').value * 0.01);
-    remaining = this.leftOver(remaining);
-    //displayBreakdown('Remaining', remaining);
+    // Annual Remaining
+    annualRemaining = remaining - parseInt(elById('savings').value);
+    remaining = annualBreakdown('Leftovers', annualRemaining);
 
     var entry_object = {
       income: income,
