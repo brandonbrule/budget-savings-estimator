@@ -30,15 +30,10 @@ var user_data = {
 
 // Income Information
 var input_paycheck = elById('paycheck');
-
 var input_payments = elById('payments');
-
 var input_savings = elById('savings');
-
 var input_initial_savings = elById('initial-savings');
-
 var input_interest = elById('interest');
-
 var input_length_of_savings = elById('length-of-savings');
 
 

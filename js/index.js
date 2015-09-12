@@ -372,16 +372,14 @@ var SimpleBudget = {
     // Remaining
     user_data.remaining = user_data.income.Monthly - user_data.payments.Monthly;
     input_savings.max = user_data.remaining;
-    
+    user_data.remaining = annualBreakdown( ( user_data.remaining * 12 ) - ( input_savings.value * 12 ) );
    
     // Savings
     user_data.savings = annualBreakdown(input_savings.value * 12);
 
-    // Annual Remaining
-    user_data.remaining = annualBreakdown( ( user_data.remaining * 12 ) - ( input_savings.value * 12 ) );
-
-
-
+    
+    //  Display Boxes  //
+    // ---------------- //
     var user_data_display_boxes = {
       Income: user_data.income,
       Payments: user_data.payments,
@@ -390,10 +388,12 @@ var SimpleBudget = {
     }
     displayBreakdown(user_data_display_boxes);
 
+
+
+    //  Graph Settings  //
+    // ---------------- //
+    // Savings Over Time
     this.updateSavingsOverTime();
-
-    
-
 
     // Daily Stats
     this.updateStatsChart(daily_breakdown_stats_chart, 'Daily');
@@ -403,7 +403,6 @@ var SimpleBudget = {
     stats_daily_income.innerHTML = user_data.income.Daily;
     stats_daily_savings.innerHTML = user_data.savings.Daily;
 
-
     // Weekly Stats
     weekly_breakdown_stats_chart.series[0].setData( [user_data.income.Weekly, user_data.payments.Weekly, user_data.savings.Weekly, user_data.remaining.Weekly], true );
 
@@ -411,7 +410,6 @@ var SimpleBudget = {
     stats_weekly_savings.innerHTML = user_data.savings.Weekly;
     stats_weekly_payments.innerHTML = user_data.payments.Weekly;
     stats_weekly_income.innerHTML = user_data.income.Weekly;
-    
 
     // Monthly Breakdown
     monthly_breakdown_stats_chart.series[0].setData( [user_data.income.Monthly, user_data.payments.Monthly, user_data.savings.Monthly, user_data.remaining.Monthly], true );
@@ -421,18 +419,11 @@ var SimpleBudget = {
     stats_monthly_payments.innerHTML = user_data.payments.Monthly;
     stats_monthly_income.innerHTML = user_data.income.Monthly;
 
-
     // Yearly Stats
-
-    var income_annually_array = annualBreakdownArray(user_data.income.Yearly);
-    var payments_annually_array = annualBreakdownArray(user_data.payments.Yearly);
-    var savings_annually_array = annualBreakdownArray(user_data.savings.Yearly);
-    var remaining_annually_array = annualBreakdownArray(user_data.remaining.Yearly);
-
-    yearly_breakdown_stats_chart.series[0].setData( income_annually_array, true );
-    yearly_breakdown_stats_chart.series[1].setData( payments_annually_array, true );
-    yearly_breakdown_stats_chart.series[2].setData( savings_annually_array, true );
-    yearly_breakdown_stats_chart.series[3].setData( remaining_annually_array, true );
+    yearly_breakdown_stats_chart.series[0].setData( annualBreakdownArray(user_data.income.Yearly), true );
+    yearly_breakdown_stats_chart.series[1].setData( annualBreakdownArray(user_data.payments.Yearly), true );
+    yearly_breakdown_stats_chart.series[2].setData( annualBreakdownArray(user_data.savings.Yearly), true );
+    yearly_breakdown_stats_chart.series[3].setData( annualBreakdownArray(user_data.remaining.Yearly), true );
 
     stats_yearly_remaining.innerHTML = user_data.remaining.Yearly;
     stats_yearly_savings.innerHTML = user_data.savings.Yearly;
