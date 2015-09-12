@@ -15,20 +15,33 @@ function round(arg){ return Math.round(arg * 100) / 100; };
 var rootURL = window.location.origin + window.location.pathname + window.location.hash;
 
 
+// var User Inputs
+var user_data = {
+	annual_income: null,
+	income: null,
+	payments: null,
+	savings: null,
+	interest: null,
+	initial_savings: null,
+	length_of_savings: null,
+	remaining: null
+}
+
+
 // Income Information
-var paycheck;
-var payFrequency;
-var income;
-var annualIncome;
-var payments;
-var annualPayments;
-var annualSavings;
-var savings;
-var savingsOverTime;
-var remaining;
-var initialSavings;
-var interest;
-var length_of_savings;
+var input_paycheck = elById('paycheck');
+
+var input_payments = elById('payments');
+
+var input_savings = elById('savings');
+
+var input_initial_savings = elById('initial-savings');
+
+var input_interest = elById('interest');
+
+var input_length_of_savings = elById('length-of-savings');
+
+
 
 // Els
 // Stats Text

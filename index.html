@@ -63,13 +63,13 @@ GIC 3 - 5 years (locked in interest)
 
     <fieldset>
     <label for="monthly-payments">Monthly expenses? <br>Guestimates are fine.</label>    
-    <input name="monthly-payments" value="1600" id="monthly-payments" placeholder="How much are your montly bills? - ex. 350" type="text" >
+    <input name="monthly-payments" value="1600" id="payments" placeholder="How much are your montly bills? - ex. 350" type="text" >
     </fieldset>
     
     <fieldset>
     <label for="savings">Savings Goal Per Month:</label>
     <!-- <label><strong id="savings-value"> </strong> / Month</label> -->
-    <!-- <input name="savings" id="savings-monthly" type="number" minrange="0" step="10"> -->
+    <input name="savings" id="savings-range" type="range" minrange="0" step="10">
     <input name="savings" id="savings" value="50" minrange="0" step="1" type="number" >
     </fieldset>
 
@@ -120,9 +120,9 @@ GIC 3 - 5 years (locked in interest)
     <section class="question col-2">
       <h2>See the impact of "low interest" fees</h2>
       <p>They look small, but they make a big difference.</p>
-      <button data-action="fees" data-action-value="0.01">1%</button>
-      <button data-action="fees" data-action-value="0.02">2%</button>
-      <button data-action="fees" data-action-value="0.03">3%</button>
+      <button data-action="fees" data-action-value="1">1%</button>
+      <button data-action="fees" data-action-value="2">2%</button>
+      <button data-action="fees" data-action-value="3">3%</button>
     </section>
     
   </div>
@@ -183,6 +183,8 @@ GIC 3 - 5 years (locked in interest)
 <script src="js/stats-charts.js"></script>
 <script src="js/index.js"></script>
 <script>
+//RememberForm.removeLocalStorageItem('investments_localstorage');
+
 var RememberForm = (function () {
 
   // Forms as JS Object

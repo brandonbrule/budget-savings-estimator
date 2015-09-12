@@ -10,7 +10,7 @@ function hourly(value){ return round(value / 24); };
 function minutely(value){ return round(value / 60); };
 
 
-function annualBreakdown(type,value){
+function annualBreakdown(value){
   var annualBreakdown = {};
   annualBreakdown.Yearly = value;
   annualBreakdown.Monthly = monthly(value);
@@ -36,8 +36,6 @@ function annualBreakdownArray(yearly_value){
 
 
 function displayBreakdown(object){
-
-  //its.a(object);
 
   var container = elById('results');
 
@@ -76,7 +74,6 @@ function displayBreakdown(object){
 
   // Elements Exist, just set the inner html of values.  
   }else{
-    //its.a('children');
     var displayBoxes = container.getElementsByTagName('div');
     for (var i = 0, len = displayBoxes.length; i < len; i++){
       var displayBox = displayBoxes[i];
@@ -255,11 +252,10 @@ var Investing = (function () {
 // Simple Budget Object
 var SimpleBudget = {
   getIncomeInformation: function(){
-    annualPayments = monthToYear( parseInt( elById('monthly-payments').value ) );
-    savings = parseInt( elById('savings').value );
-    initialSavings = parseInt( elById('initial-savings').value );
-    interest = elById('interest').value * 0.01;
-    length_of_savings = parseInt( elById('length-of-savings').value );
+    user_data.savings = parseInt( input_savings.value );
+    user_data.initial_savings = parseInt( input_initial_savings.value );
+    user_data.interest = parseInt( input_interest.value );
+    user_data.length_of_savings = parseInt( input_length_of_savings.value );
   },
   frequencyOfPay: function(payFrequency){
     // Radio button selection, once or twice a month (returns 1 or 2)
@@ -271,29 +267,28 @@ var SimpleBudget = {
     return payFrequency[i].value;
   },
   annualIncome: function(){
-    paycheck = elById("paycheck").value;
-    payFrequency = document.getElementsByName('frequency-of-pay');
-    annualIncome = this.frequencyOfPay(payFrequency);
+    var paycheck = input_paycheck.value;
+    var payFrequency = document.getElementsByName('frequency-of-pay');
+    user_data.pay_frequency = this.frequencyOfPay(payFrequency);
     
     // How often you get paid
-    if(annualIncome == 'once-month'){
-      annualIncome = monthToYear(paycheck);
+    if(user_data.pay_frequency == 'once-month'){
+      user_data.annual_income = parseInt( monthToYear(paycheck) );
     }
-    if(annualIncome == 'twice-month'){
-      annualIncome = monthToYear(paycheck) * 2
+    if(user_data.pay_frequency == 'twice-month'){
+      user_data.annual_income = monthToYear(paycheck) * 2
     }
-    if(annualIncome == 'two-weeks'){
-      annualIncome = round(paycheck * 26);
+    if(user_data.pay_frequency == 'two-weeks'){
+      user_data.annual_income = round(paycheck * 26);
     }
 
-    return annualIncome;
-
+    return user_data.annual_income;
   },
   overTime: function(value){
     var yearsObj = [];
     var value = value;
-    for(var i = 0, years = length_of_savings; i <= years; i++){
-      yearsObj.push( (value * i) + initialSavings );  
+    for(var i = 0, years = user_data.length_of_savings; i <= years; i++){
+      yearsObj.push( (value * i) + user_data.initial_savings );  
     }
     return yearsObj;
   },
@@ -313,16 +308,16 @@ var SimpleBudget = {
   updateStatsChart: function(chart, time_period){
 
     // Daily Breakdown Stats
-    var dailySum = parseInt( savings[time_period] + payments[time_period] + remaining[time_period] );
+    var dailySum = parseInt( user_data.savings[time_period] + user_data.payments[time_period] + user_data.remaining[time_period] );
     var chart_data =[
         [
-          'Payments $' + payments[time_period], parseInt( (payments[time_period] * 100) / dailySum )
+          'Payments $' + user_data.payments[time_period], parseInt( (user_data.payments[time_period] * 100) / dailySum )
         ],
         [
-          'Savings $' + savings[time_period], parseInt( (savings[time_period] * 100) / dailySum )
+          'Savings $' + user_data.savings[time_period], parseInt( (user_data.savings[time_period] * 100) / dailySum )
         ],
         [
-        'Remaining $' + remaining[time_period], parseInt( (remaining[time_period] * 100) / dailySum )
+        'Remaining $' + user_data.remaining[time_period], parseInt( (user_data.remaining[time_period] * 100) / dailySum )
         ]
     ];
 
@@ -333,24 +328,25 @@ var SimpleBudget = {
   },
 
   updateSavingsOverTime: function(){
+    var savingsOverTime;
     // Reset
     this.resetMainChart(savings_invesments_overtime_chart);
 
     // // Savings over time
-    savingsOverTime = this.overTime(annualSavings, length_of_savings);
+    savingsOverTime = this.overTime(user_data.savings.Yearly, user_data.length_of_savings);
 
     // Savings with Interest
     var custom_config = {
-      principle_value : initialSavings,
-      monthly_contribution: savings.Yearly,
-      annual_interest: interest,
+      principle_value : user_data.initial_savings,
+      monthly_contribution: user_data.savings.Yearly,
+      annual_interest: user_data.interest * 0.01,
       times_compounded_per_year: 1,
-      length_of_investment: length_of_savings
+      length_of_investment: user_data.length_of_savings
     };
 
     // Don't do anything if there's no interest to compound
     var savingsWithInterest;
-    if (interest > 0){
+    if (user_data.interest > 0){
       savingsWithInterest = Investing.compounded_savings(custom_config);
     } else {
       savingsWithInterest = ['0']
@@ -369,79 +365,81 @@ var SimpleBudget = {
     this.getIncomeInformation();
 
     // Income
-    annualIncome = this.annualIncome();
-    income = annualBreakdown('Income', annualIncome);
+    user_data.annual_income = this.annualIncome();
+    user_data.income = annualBreakdown(user_data.annual_income);
 
     // Payments
-    payments = annualBreakdown('Payments', annualPayments);
+    user_data.payments = annualBreakdown( monthToYear( input_payments.value ) );
     
     // Remaining
-    remaining = annualIncome - annualPayments;
-    elById('savings').max = remaining / 12;
+    user_data.remaining = user_data.income.Monthly - user_data.payments.Monthly;
+    input_savings.max = user_data.remaining;
+    input_savings.max = user_data.remaining;
    
     // Savings
-    annualSavings = elById('savings').value * 12;
-    
-    savings = annualBreakdown('Savings', annualSavings);
+    user_data.savings = annualBreakdown(input_savings.value * 12);
 
     // Annual Remaining
-    annualRemaining = remaining - parseInt(elById('savings').value * 12);
-    remaining = annualBreakdown('Leftovers', annualRemaining);
+    user_data.remaining = annualBreakdown( ( user_data.remaining * 12 ) - ( input_savings.value * 12 ) );
 
-    var entry_object = {
-      income: income,
-      payments: payments,
-      savings: savings,
-      remaining: remaining
+
+
+    var user_data_display_boxes = {
+      Income: user_data.income,
+      Payments: user_data.payments,
+      Savings: user_data.savings,
+      Remaining: user_data.remaining
     }
-
-    displayBreakdown(entry_object);
+    displayBreakdown(user_data_display_boxes);
 
     this.updateSavingsOverTime();
 
-    stats_daily_remaining.innerHTML = remaining.Daily;
-    stats_daily_payments.innerHTML = payments.Daily;
-    stats_daily_income.innerHTML = income.Daily;
-    stats_daily_savings.innerHTML = savings.Daily;
+    
 
 
     // Daily Stats
     this.updateStatsChart(daily_breakdown_stats_chart, 'Daily');
 
+    stats_daily_remaining.innerHTML = user_data.remaining.Daily;
+    stats_daily_payments.innerHTML = user_data.payments.Daily;
+    stats_daily_income.innerHTML = user_data.income.Daily;
+    stats_daily_savings.innerHTML = user_data.savings.Daily;
+
+
     // Weekly Stats
+    weekly_breakdown_stats_chart.series[0].setData( [user_data.income.Weekly, user_data.payments.Weekly, user_data.savings.Weekly, user_data.remaining.Weekly], true );
 
-    weekly_breakdown_stats_chart.series[0].setData( [income.Weekly, payments.Weekly, savings.Weekly, remaining.Weekly], true );
-
-    stats_weekly_remaining.innerHTML = remaining.Weekly;
-    stats_weekly_savings.innerHTML = savings.Weekly;
-    stats_weekly_payments.innerHTML = payments.Weekly;
-    stats_weekly_income.innerHTML = income.Weekly;
+    stats_weekly_remaining.innerHTML = user_data.remaining.Weekly;
+    stats_weekly_savings.innerHTML = user_data.savings.Weekly;
+    stats_weekly_payments.innerHTML = user_data.payments.Weekly;
+    stats_weekly_income.innerHTML = user_data.income.Weekly;
     
 
     // Monthly Breakdown
-    monthly_breakdown_stats_chart.series[0].setData( [income.Monthly, payments.Monthly, savings.Monthly, remaining.Monthly], true );
+    monthly_breakdown_stats_chart.series[0].setData( [user_data.income.Monthly, user_data.payments.Monthly, user_data.savings.Monthly, user_data.remaining.Monthly], true );
 
-    stats_monthly_remaining.innerHTML = remaining.Monthly;
-    stats_monthly_savings.innerHTML = savings.Monthly;
-    stats_monthly_payments.innerHTML = payments.Monthly;
-    stats_monthly_income.innerHTML = income.Monthly;
+    stats_monthly_remaining.innerHTML = user_data.remaining.Monthly;
+    stats_monthly_savings.innerHTML = user_data.savings.Monthly;
+    stats_monthly_payments.innerHTML = user_data.payments.Monthly;
+    stats_monthly_income.innerHTML = user_data.income.Monthly;
+
 
     // Yearly Stats
 
-    var income_annually_array = annualBreakdownArray(income.Yearly);
-    var payments_annually_array = annualBreakdownArray(payments.Yearly);
-    var savings_annually_array = annualBreakdownArray(savings.Yearly);
-    var remaining_annually_array = annualBreakdownArray(remaining.Yearly);
+    var income_annually_array = annualBreakdownArray(user_data.income.Yearly);
+    var payments_annually_array = annualBreakdownArray(user_data.payments.Yearly);
+    var savings_annually_array = annualBreakdownArray(user_data.savings.Yearly);
+    var remaining_annually_array = annualBreakdownArray(user_data.remaining.Yearly);
 
     yearly_breakdown_stats_chart.series[0].setData( income_annually_array, true );
     yearly_breakdown_stats_chart.series[1].setData( payments_annually_array, true );
     yearly_breakdown_stats_chart.series[2].setData( savings_annually_array, true );
     yearly_breakdown_stats_chart.series[3].setData( remaining_annually_array, true );
 
-    stats_yearly_remaining.innerHTML = remaining.Yearly;
-    stats_yearly_savings.innerHTML = savings.Yearly;
-    stats_yearly_payments.innerHTML = payments.Yearly;
-    stats_yearly_income.innerHTML = income.Yearly;
+    stats_yearly_remaining.innerHTML = user_data.remaining.Yearly;
+    stats_yearly_savings.innerHTML = user_data.savings.Yearly;
+    stats_yearly_payments.innerHTML = user_data.payments.Yearly;
+    stats_yearly_income.innerHTML = user_data.income.Yearly;
 
   }
 
@@ -455,18 +453,19 @@ var ChartingUpdates = (function () {
   var questions_container = document.getElementById('questions-container');
 
   var feesCompounded = function(interest_data_value){
+    
     // Savings with Interest
     var custom_config = {
-      principle_value : initialSavings,
-      monthly_contribution: savings.Yearly,
-      annual_interest: interest - interest_data_value,
+      principle_value : user_data.initial_savings,
+      monthly_contribution: user_data.savings.Yearly,
+      annual_interest: ( user_data.interest - interest_data_value ) * 0.01,
       times_compounded_per_year: 1,
-      length_of_investment: length_of_savings
+      length_of_investment: user_data.length_of_savings
     };
 
     // Don't do anything if there's no interest to compound
     var savingsWithInterest;
-    if (interest > 0){
+    if (user_data.interest > 0){
       var savingsWithInterestFees = Investing.compounded_savings(custom_config);
     } else {
       savingsWithInterestFees = ['0']
@@ -480,8 +479,7 @@ var ChartingUpdates = (function () {
   };
 
   var overTime = function(years){
-    var length_of_savings = document.getElementById('length-of-savings');
-    document.getElementById('length-of-savings').value = years;
+    input_length_of_savings.value = years;
     SimpleBudget.calculate();
   };
 
@@ -563,10 +561,3 @@ elById("submit").onclick = function () {
 
 
 
-// elById("quick-savings-submit").onclick = function () {
-//   var savings = elById('quick-savings-savings').value * 12;
-//   var savingsPerYear = SimpleBudget.savings(savings);
-//   displayBreakdown('Savings', savingsPerYear);
-// };
-
-//its.a(SimpleBudget.savings(100));
