@@ -2,17 +2,17 @@
 
 // Useful Math Functions
 // -------------------------- //
-function monthToYear(value) { return round(value * 12); };
-function monthly(value){ return round(value / 12); };
-function weekly(value){ return round(value / 52); };
-function daily(value){ return round(value / 365); };
-function hourly(value){ return round(value / 24); };
-function minutely(value){ return round(value / 60); };
+function monthToYear(value) { return parseInt(value * 12).toFixed(2); };
+function monthly(value){ return parseInt(value / 12).toFixed(2); };
+function weekly(value){ return parseInt(value / 52).toFixed(2); };
+function daily(value){ return parseInt(value / 365).toFixed(2); };
+function hourly(value){ return parseInt(value / 24).toFixed(2); };
+function minutely(value){ return parseInt(value / 60).toFixed(2); };
 
 
 function annualBreakdown(value){
   var annualBreakdown = {};
-  annualBreakdown.Yearly = value;
+  annualBreakdown.Yearly = parseInt(value).toFixed(2);
   annualBreakdown.Monthly = monthly(value);
   annualBreakdown.Weekly = weekly(value);
   annualBreakdown.Daily = daily(value);
@@ -56,7 +56,7 @@ function displayBreakdown(object){
         for (var breakdown_type in breakdown_object) {
           if (breakdown_object.hasOwnProperty(breakdown_type)) {
             var list_item = document.createElement('li');
-            var value = '<strong>' + round(breakdown_object[breakdown_type]) + '</strong>';
+            var value = '<strong>' + breakdown_object[breakdown_type] + '</strong>';
                
             list_item.innerHTML = breakdown_type + ' ' + value;
             list_container.appendChild( list_item );
@@ -85,7 +85,7 @@ function displayBreakdown(object){
 
       for (var breakdown_type in breakdown_object) {
         if (breakdown_object.hasOwnProperty(breakdown_type)) {
-          var str = round(breakdown_object[breakdown_type]);
+          var str = breakdown_object[breakdown_type];
           breakdown_array.push( (str) );
         }
       }
@@ -515,7 +515,6 @@ var ChartingUpdates = (function () {
 // Resets the Investments Graphs Data when new data is submitted
 
 function startParty(){
-  RememberForm.init();
   SimpleBudget.calculate();
 };
 
@@ -532,16 +531,29 @@ elById("submit").onclick = function () {
     var input = inputs[i];
     var type = input.getAttribute('type');
 
-    if (type === 'range' || type === 'radio' || type === 'number'){
+    if ( type === 'radio' || type === 'number' ){
       input.addEventListener('change', function(){
         startParty();
       });
-    } else if (type === 'text'){
-
       input.addEventListener('keyup', debounce(function (event) {
         // do the Ajax request
         startParty();
       }, 550) );
+
+    } else if (type === 'range') {
+      input.addEventListener('change', function(e){
+        var savings_input = document.getElementById('savings');
+        var savings = savings_input.value;
+        var savings_max = savings_input.getAttribute('max');
+        var savings_range = e.target;
+        var savings_percent = (e.target.value * 0.01).toFixed(2);
+        document.getElementById('savings-range-value').innerHTML = e.target.value + '%';
+        savings_input.value = parseInt(savings_max * savings_percent).toFixed(2);
+        startParty();
+      });
+    } else if (type === 'text'){
+
+      
 
     }
   }

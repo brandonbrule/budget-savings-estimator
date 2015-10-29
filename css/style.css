@@ -66,7 +66,8 @@ hr {
   @media screen and (min-width: 600px) {
     .navigation-container {
       float: left;
-      width: 25%; } }
+      width: 25%;
+      max-width: 320px; } }
   @media screen and (min-width: 1400px) {
     .navigation-container {
       position: fixed; } }
@@ -80,11 +81,6 @@ fieldset {
     margin-top: 0;
     border-top: none;
     padding-top: 0; }
-
-@media screen and (min-width: 600px) {
-  label {
-    float: left;
-    width: 60%; } }
 
 .full-label {
   width: 100%;
@@ -108,11 +104,11 @@ input {
   background: #333540;
   border: none;
   color: #fff; }
-  @media screen and (min-width: 600px) {
-    input {
-      margin-top: 0;
-      float: right;
-      width: 35%; } }
+
+input[type="range"] {
+  width: 30%;
+  float: left;
+  margin-top: 0; }
 
 input[type="button"], .button {
   font-size: 1em;
