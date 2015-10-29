@@ -404,7 +404,12 @@ var SimpleBudget = {
     stats_daily_savings.innerHTML = user_data.savings.Daily;
 
     // Weekly Stats
-    weekly_breakdown_stats_chart.series[0].setData( [user_data.income.Weekly, user_data.payments.Weekly, user_data.savings.Weekly, user_data.remaining.Weekly], true );
+    weekly_breakdown_stats_chart.series[0].setData( [
+      parseInt( user_data.income.Weekly ), 
+      parseInt( user_data.payments.Weekly ), 
+      parseInt( user_data.savings.Weekly ), 
+      parseInt( user_data.remaining.Weekly )
+    ], true );
 
     stats_weekly_remaining.innerHTML = user_data.remaining.Weekly;
     stats_weekly_savings.innerHTML = user_data.savings.Weekly;
@@ -412,7 +417,12 @@ var SimpleBudget = {
     stats_weekly_income.innerHTML = user_data.income.Weekly;
 
     // Monthly Breakdown
-    monthly_breakdown_stats_chart.series[0].setData( [user_data.income.Monthly, user_data.payments.Monthly, user_data.savings.Monthly, user_data.remaining.Monthly], true );
+    monthly_breakdown_stats_chart.series[0].setData( [
+      parseInt( user_data.income.Monthly ), 
+      parseInt( user_data.payments.Monthly ), 
+      parseInt( user_data.savings.Monthly ), 
+      parseInt( user_data.remaining.Monthly )
+    ], true );
 
     stats_monthly_remaining.innerHTML = user_data.remaining.Monthly;
     stats_monthly_savings.innerHTML = user_data.savings.Monthly;
