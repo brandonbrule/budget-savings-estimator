@@ -534,6 +534,20 @@ elById("submit").onclick = function () {
 };
 
 
+
+function updateRange(){
+
+  var savings_range = document.getElementById('savings-range');
+  var savings_range_value = document.getElementById('savings-range-value');
+  var savings_input = document.getElementById('savings');
+  var savings = parseInt( savings_input.value );
+  var savings_max = parseInt( savings_input.getAttribute('max') );
+  var savings_percent = (savings / savings_max ) * 100;
+
+  savings_range.value = savings_percent;
+  savings_range_value.innerHTML = savings_percent.toFixed(2) + '%';
+}
+
 (function(){
   var inputs = document.getElementsByTagName('input');
 
@@ -544,10 +558,13 @@ elById("submit").onclick = function () {
     if ( type === 'radio' || type === 'number' ){
       input.addEventListener('change', function(){
         startParty();
+        updateRange();
       });
       input.addEventListener('keyup', debounce(function (event) {
         // do the Ajax request
         startParty();
+
+        updateRange();
       }, 550) );
 
     } else if (type === 'range') {
