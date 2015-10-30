@@ -106,8 +106,9 @@ input {
   color: #fff; }
 
 input[type="range"] {
-  width: 30%;
+  width: 75%;
   float: left;
+  margin: 0;
   margin-top: 0; }
 
 input[type="button"], .button {
@@ -115,12 +116,20 @@ input[type="button"], .button {
   border: 1px solid #efefef;
   cursor: pointer; }
 
+#savings-range-value {
+  width: 25%;
+  text-align: center; }
+
 .container {
   padding: 0.65% 0.5% 0.5% 0; }
   @media screen and (min-width: 600px) {
     .container {
       width: 75%;
       float: right; } }
+
+@media screen and (min-width: 600px) {
+  .control-container {
+    float: right; } }
 
 #results ol {
   padding: 0;

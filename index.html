@@ -71,13 +71,16 @@ GIC 3 - 5 years (locked in interest)
     </fieldset>
     
     <fieldset>
-    <label style="float:left;" for="savings">Savings Per Month:</label>
-    <input style="float:left;" name="savings" id="savings-range" type="range" min="0" max="100" step="1">
-    <span style="float:left;" id="savings-range-value">--</span>
-    <div class="control-container">
-      <input name="savings" id="savings" value="100" minrange="0" step="1" type="number" >
-
-    </div>
+      <label style="float:left;" for="savings">Savings Per Month:</label>
+      
+      <div class="control-container">
+        <input name="savings" id="savings" value="100" minrange="0" step="1" type="number" >
+        <div class="col-container">
+          <input name="savings" id="savings-range" type="range" min="0" max="100" step="1">
+          <span id="savings-range-value">--</span>
+        </div>
+      </div>
+      
     </fieldset>
 
 

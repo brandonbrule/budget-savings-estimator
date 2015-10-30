@@ -560,11 +560,13 @@ function updateRange(){
         startParty();
         updateRange();
       });
-      input.addEventListener('keyup', debounce(function (event) {
+      input.addEventListener('keyup', debounce(function (e) {
         // do the Ajax request
         startParty();
 
-        updateRange();
+        if (e.target.id === 'savings'){
+          updateRange();
+        }
       }, 550) );
 
     } else if (type === 'range') {

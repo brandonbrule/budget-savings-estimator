@@ -179,8 +179,9 @@ input{
  
 }
 input[type="range"]{
-  width: 30%;
+  width: 75%;
   float:left;
+  margin: 0;
   margin-top: 0;
 }
 input[type="button"], .button{
@@ -189,6 +190,10 @@ input[type="button"], .button{
   cursor: pointer;
 }
 
+#savings-range-value{
+  width: 25%;
+  text-align: center;
+}
 
 
 .container{
@@ -206,6 +211,7 @@ input[type="button"], .button{
 
 .control-container{
    @media screen and (min-width: $breakpoint-medium){
+    float:right;
   }
 }
 
