@@ -16,10 +16,12 @@ if(read_query_string()){
 		for (prop in data){
 
 			// Frequency of Pay
-			if (prop === 'frequency-of-pay')
+			if (prop === 'frequency-of-pay'){
 
+			}
 			// HTML Inputs
 			if (document.getElementById(prop)){
+
 				document.getElementById(prop).value = data[prop];
 			}
 		}
