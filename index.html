@@ -64,9 +64,9 @@ GIC 3 - 5 years (locked in interest)
     
 
     <fieldset>
-    <label for="monthly-payments">Monthly expenses?</label>    
+    <label for="payments">Monthly expenses?</label>    
     <div class="control-container"> 
-      <input name="monthly-payments" value="1600" id="payments" placeholder="How much are your montly bills? - ex. 350" type="number" >
+      <input name="payments" value="1600" id="payments" placeholder="How much are your montly bills? - ex. 350" type="number" >
     </div>
     </fieldset>
     
@@ -76,7 +76,7 @@ GIC 3 - 5 years (locked in interest)
       <div class="control-container">
         <input name="savings" id="savings" value="100" minrange="0" step="1" type="number" >
         <div class="col-container">
-          <input name="savings" id="savings-range" type="range" value="10" min="0" max="100" step="1">
+          <input name="savings-range" id="savings-range" type="range" value="10" min="0" max="100" step="1">
           <span id="savings-range-value">10.00%</span>
         </div>
       </div>
@@ -104,7 +104,7 @@ GIC 3 - 5 years (locked in interest)
       <div class="col-container">
         <!-- <input type="button" class="col-2" onclick="RememberForm.init();" value="Save Settings"> -->
         <input id="clear" type="button" class="col-2" value="Clear">
-        <input type="button" class="col-2 button"value="Submit" name="submit" id="submit" >
+        <input type="submit" class="col-2 button"value="Submit" id="submit" >
       </div>
     </fieldset>
   </form>
@@ -193,7 +193,9 @@ GIC 3 - 5 years (locked in interest)
 <script src="js/highcharts.js"></script>
 <script src="js/global-variables.js"></script>
 <script src="js/stats-charts.js"></script>
+<script src="js/parameters.js"></script>
 <script src="js/index.js"></script>
+
 <script>
 if ( localStorage.getItem('investments_localstorage') ) {
   localStorage.removeItem('investments_localstorage');
