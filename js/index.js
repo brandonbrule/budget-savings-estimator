@@ -2,17 +2,17 @@
 
 // Useful Math Functions
 // -------------------------- //
-function monthToYear(value) { return parseInt(value * 12).toFixed(2); };
-function monthly(value){ return parseInt(value / 12).toFixed(2); };
-function weekly(value){ return parseInt(value / 52).toFixed(2); };
-function daily(value){ return parseInt(value / 365).toFixed(2); };
-function hourly(value){ return parseInt(value / 24).toFixed(2); };
-function minutely(value){ return parseInt(value / 60).toFixed(2); };
+function monthToYear(value) { return parseFloat(value * 12).toFixed(2); };
+function monthly(value){ return parseFloat(value / 12).toFixed(2); };
+function weekly(value){ return parseFloat(value / 52).toFixed(2); };
+function daily(value){ return parseFloat(value / 365).toFixed(2); };
+function hourly(value){ return parseFloat(value / 24).toFixed(2); };
+function minutely(value){ return parseFloat(value / 60).toFixed(2); };
 
 
 function annualBreakdown(value){
   var annualBreakdown = {};
-  annualBreakdown.Yearly = parseInt(value).toFixed(2);
+  annualBreakdown.Yearly = parseFloat(value).toFixed(2);
   annualBreakdown.Monthly = monthly(value);
   annualBreakdown.Weekly = weekly(value);
   annualBreakdown.Daily = daily(value);
