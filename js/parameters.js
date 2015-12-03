@@ -17,7 +17,7 @@ if(read_query_string()){
 
 			// Frequency of Pay
 			if (prop === 'frequency-of-pay'){
-
+				document.querySelector('[value="' + data[prop] + '"]').checked = true;
 			}
 			// HTML Inputs
 			if (document.getElementById(prop)){
